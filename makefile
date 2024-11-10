@@ -34,6 +34,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.cc
 $(BUILD_DIR)/%.out: $(OBJS_DIR)/%.o
 	$(CXX) $^ $(INC_OBJS) -o $@ 
 
+# TODO move this part to be prebuild instead of after cleaning
 clean:
 	rm -r $(BUILD_DIR)
 	mkdir -p $(OBJS_DIR)
