@@ -9,6 +9,7 @@ namespace protectedLinkedList {
 class LinkedList {
 public:
     LinkedList();
+    ~LinkedList();
     void pushHead(Node *);
     Node *popHead();
 
@@ -18,10 +19,9 @@ public:
 
 private:
     std::mutex listMutex;
-    Node head;
+    Node *head;
     std::size_t N;
-
-}
+};
 
 }
 
