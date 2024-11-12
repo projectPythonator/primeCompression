@@ -2,7 +2,6 @@
 #define LIGHTLINKEDLIST_HPP
 
 #include "LightListNode.hpp"
-#include <mutex>
 
 namespace protectedLinkedList {
 
@@ -18,7 +17,6 @@ public:
     }
 
 private:
-    std::mutex listMutex;
     Node *head;
     std::size_t N;
 };
