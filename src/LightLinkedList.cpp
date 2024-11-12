@@ -8,11 +8,9 @@ LinkedList::LinkedList() {
 }
 
 void LinkedList::pushHead(Node *newHead) {
-    this.listMutex.lock();
     newHead.setNext(this.head);
     this.head = newHead;
     this.size++;
-    this.listMutex.unlock();
 }
 
 Node *LinkedList::popHead() {
@@ -20,4 +18,5 @@ Node *LinkedList::popHead() {
     this.head = this.head.next;
     return rHead;
 }
+
 }
