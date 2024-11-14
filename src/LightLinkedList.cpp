@@ -1,5 +1,5 @@
 #include "header/LightLinkedList.hpp"
-
+// update the namespaces properly
 namespace protectedLinkedList {
 
 LinkedList::LinkedList() {
