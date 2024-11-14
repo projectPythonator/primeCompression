@@ -1,4 +1,3 @@
-from itertools import pairwise
 jumps = [1, 7, 11, 13, 17, 19, 23, 29]
 diffs = [6, 4, 2, 4, 2, 4, 6, 2]
 osets = [0, 6, 10, 12, 16, 18, 22, 28]
