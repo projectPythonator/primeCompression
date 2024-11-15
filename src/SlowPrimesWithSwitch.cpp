@@ -4,4 +4,4 @@
 
 namespace sieveCompress {
 
-};
+}
