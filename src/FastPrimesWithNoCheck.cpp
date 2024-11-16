@@ -8,7 +8,12 @@ namespace sieveCompress {
 // typing of sieve needs fixed
 // in our case I am not sure if sieve size is needed 
 // its here for potential portablility
-void crossOff(uint8_t *sieve, std::size_t sieveSize) {
+void crossOff(
+        uint8_t *sieve, 
+        std::size_t sieveSize, 
+        std::size_t startIndex, 
+        std::size_t endIndex) {
+
 
 }
 }
