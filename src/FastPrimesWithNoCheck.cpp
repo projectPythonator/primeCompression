@@ -9,15 +9,24 @@ namespace sieveCompress {
 // in our case I am not sure if sieve size is needed 
 // its here for potential portablility
 // TODO check how expensive cleaning up magic numbers is
+// TODO might need to switch this function up if too slow
+// TODO change maskIndex typing maybe
 void crossOff(
         uint8_t *sieve, 
         std::size_t sieveSize, 
         std::size_t startIndex, 
         std::size_t endIndex) {
+    #define IS_DONE_SIEVING(maskIndex) \
+        if (kValue >= sieveSize) { \
+            updatePrimeInfo(primeIndex, currentIndex, maskIndex) \
+            goto next_prime; \
+        } \
+
     
     for (std::size_t primeIndex = startIndex; primeIndex < endIndex; primeIndex++) {
-
-        std::size_t maskIndex; // I am split on what type this should have 
+        std::size_t currentIndex;   // represents the current global index of this prime
+        std::size_t kValue;         // place holder for 30 * k + b for k
+        std::size_t maskIndex;      // modified version of (currentIndex % 30) 
         switch (maskIndex) {
             // handles primes of form 30 * k + 1
             for (;;) {
@@ -134,7 +143,7 @@ void crossOff(
             default: UNREACHABLE;
         }
 
-        next_iteration:;
+        next_prime:;
     }
 }
 }
