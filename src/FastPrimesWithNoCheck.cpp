@@ -3,5 +3,13 @@
 
 namespace sieveCompress {
 
+
+// needs class extention
+// typing of sieve needs fixed
+// in our case I am not sure if sieve size is needed 
+// its here for potential portablility
+void crossOff(uint8_t *sieve, std::size_t sieveSize) {
+
+}
 }
 
