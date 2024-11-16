@@ -13,8 +13,10 @@ void crossOff(
         std::size_t sieveSize, 
         std::size_t startIndex, 
         std::size_t endIndex) {
+    
+    for (std::size_t primeIndex = startIndex; primeIndex < endIndex; primeIndex++) {
 
-
+    }
 }
 }
 
