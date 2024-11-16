@@ -16,6 +16,12 @@ void crossOff(
     
     for (std::size_t primeIndex = startIndex; primeIndex < endIndex; primeIndex++) {
 
+        std::size_t maskIndex; // I am split on what type this should have 
+        switch (maskIndex) {
+
+            default: UNREACHABLE;
+        }
+
         next_iteration:;
     }
 }
