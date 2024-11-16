@@ -3,7 +3,7 @@ mods = [1, 7, 11, 13, 17, 19, 23, 29]
 modsp = [7, 11, 13, 17, 19, 23, 29, 31]
 bound = 2**32
 span = 7 * 11 * 13 * 17 * 128
-span = 2**16
+span = 2**18
 spanReal = span * 30
 ans = 0
 
@@ -91,7 +91,7 @@ def block_sieve_odd(limit, span):
 
 
 getStartPoint()
-block_sieve_odd(1<<30)
+block_sieve_odd(1<<30, span)
 
 print("we can free loop up till {}th prime = {}".format(sqskipInd, sqskipVersion))
 print("we can check loop up till {}th prime = {}".format(noCheckInd, noCheckVersion))
