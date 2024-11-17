@@ -41,9 +41,6 @@ namespace sieveCompress {
             std::size_t startIndex, 
             std::size_t endIndex) {
 
-        std::size_t byteIndex;   // represents the current global index of this prime
-        std::size_t kValue;         // place holder for 30 * k + b for k
-        std::size_t maskIndex;      // modified version of (byteIndex % 30) 
         std::size_t byteIndex;  // represents the current global index of this prime
         std::size_t kValue;     // place holder for 30 * k + b for k
         std::size_t maskIndex;  // modified version of (byteIndex % 30) 
