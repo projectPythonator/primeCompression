@@ -7,6 +7,16 @@ old files use .cc and .h
 new files using .cpp and .hpp  
 will move over the old files to new extentions and update make file later  
   
+CURRENT USAGE  
+currently you can try this out but its not that user friendly  
+steps are  
+1.) type make [need to type it twice with make -j since have dep bug]  
+2.) type "./moveIt" to move data to the build/data for program  
+3.) adjust the current bounds file [not user friendly that much]  
+4.) ./prog.out > yourFileName.bin [or what ever extention]  
+will give a short mapping of programs to txt files  
+
+  
 BOUND INFO  
 some information on the bounds and ranges I am planning to work with  
 1.) I am planning to use 2^15 sieve block sizes per thread bounds listed below  
