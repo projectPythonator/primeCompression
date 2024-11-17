@@ -10,10 +10,12 @@ namespace sieveCompress {
             goto next_prime; \
         }
 
-    void crossOff_1() {
-        std::size_t byteIndex;   // represents the current global index of this prime
-        std::size_t kValue;         // place holder for 30 * k + b for k
-        std::size_t maskIndex;      // modified version of (byteIndex % 30) 
+    void crossOff_1(
+            uint8_t *sieve, 
+            std::size_t sieveSize, 
+            std::size_t startIndex, 
+            std::size_t endIndex) {
+        
         std::size_t byteIndex;  // represents the current global index of this prime
         std::size_t kValue;     // place holder for 30 * k + b for k
         std::size_t maskIndex;  // modified version of (byteIndex % 30) 
@@ -33,7 +35,12 @@ namespace sieveCompress {
         }
     }
 
-    void crossOff_7() {
+    void crossOff_7(
+            uint8_t *sieve, 
+            std::size_t sieveSize, 
+            std::size_t startIndex, 
+            std::size_t endIndex) {
+
         std::size_t byteIndex;   // represents the current global index of this prime
         std::size_t kValue;         // place holder for 30 * k + b for k
         std::size_t maskIndex;      // modified version of (byteIndex % 30) 
@@ -57,7 +64,12 @@ namespace sieveCompress {
         }
     }
 
-    void crossOff_11() {
+    void crossOff_11(
+            uint8_t *sieve, 
+            std::size_t sieveSize, 
+            std::size_t startIndex, 
+            std::size_t endIndex) {
+
         std::size_t byteIndex;  // represents the current global index of this prime
         std::size_t kValue;     // place holder for 30 * k + b for k
         std::size_t maskIndex;  // modified version of (byteIndex % 30) 
@@ -78,7 +90,12 @@ namespace sieveCompress {
         }
     }
 
-    void crossOff_13() {
+    void crossOff_13(
+            uint8_t *sieve, 
+            std::size_t sieveSize, 
+            std::size_t startIndex, 
+            std::size_t endIndex) {
+
         std::size_t byteIndex;  // represents the current global index of this prime
         std::size_t kValue;     // place holder for 30 * k + b for k
         std::size_t maskIndex;  // modified version of (byteIndex % 30) 
@@ -98,7 +115,12 @@ namespace sieveCompress {
         }
     }
 
-    void crossOff_17() {
+    void crossOff_17(
+            uint8_t *sieve, 
+            std::size_t sieveSize, 
+            std::size_t startIndex, 
+            std::size_t endIndex) {
+
         std::size_t byteIndex;  // represents the current global index of this prime
         std::size_t kValue;     // place holder for 30 * k + b for k
         std::size_t maskIndex;  // modified version of (byteIndex % 30) 
@@ -118,7 +140,12 @@ namespace sieveCompress {
         }
     }
 
-    void crossOff_19() {
+    void crossOff_19(
+            uint8_t *sieve, 
+            std::size_t sieveSize, 
+            std::size_t startIndex, 
+            std::size_t endIndex) {
+
         std::size_t byteIndex;  // represents the current global index of this prime
         std::size_t kValue;     // place holder for 30 * k + b for k
         std::size_t maskIndex;  // modified version of (byteIndex % 30) 
@@ -138,7 +165,12 @@ namespace sieveCompress {
         }
     }
 
-    void crossOff_23() {
+    void crossOff_23(
+            uint8_t *sieve, 
+            std::size_t sieveSize, 
+            std::size_t startIndex, 
+            std::size_t endIndex) {
+
         std::size_t byteIndex;  // represents the current global index of this prime
         std::size_t kValue;     // place holder for 30 * k + b for k
         std::size_t maskIndex;  // modified version of (byteIndex % 30) 
@@ -158,7 +190,12 @@ namespace sieveCompress {
         }
     }
 
-    void crossOff_29() {
+    void crossOff_29(
+            uint8_t *sieve, 
+            std::size_t sieveSize, 
+            std::size_t startIndex, 
+            std::size_t endIndex) {
+
         std::size_t byteIndex;  // represents the current global index of this prime
         std::size_t kValue;     // place holder for 30 * k + b for k
         std::size_t maskIndex;  // modified version of (byteIndex % 30) 
