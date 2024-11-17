@@ -23,4 +23,12 @@ uint64_t fastModBy30(uint64_t n) {
     return n - ((__uint128_t (n) * INVERSE_MOD_30_LITERAL) >> NORMALIZE_SHIFT) * NORMALIZE_MUL;
 }
 
+bool cmpSquares(uint64_t m, uint16_t n) {
+    return m <= n * n;
+}
+
+bool cmpSquares(uint64_t m, uint32_t n) {
+    return m <= n * n;
+}
+
 #endif
