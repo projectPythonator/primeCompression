@@ -2,6 +2,7 @@
 //
 #include "./header/ByteMasks.hpp"
 
+// TODO turn into class methods
 namespace sieveCompress {
     #define IS_DONE(maskIndex) \
         if (kValue >= sieveSize) [[unlikely]] \
