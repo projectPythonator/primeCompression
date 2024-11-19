@@ -1,4 +1,5 @@
-TODO update thhis for the readmes i have locally  
+TODO add in automated checks for style guides chosen  
+TODO fix README.md tab indenting (hopefully find a automated fix)  
 Updates: project currently in migration to better portablility and faster code  
 changes being made to support mutliple threads, have better cache usage  
 and also able to bench and analyze it better.  
@@ -74,4 +75,9 @@ some information on the bounds and ranges I am planning to work with
     blocking, 3.0 needs to happen before the next 2, and same for 3-4 otherwise no blocking, for IO  
     you just need to write IO before 3.1 finishes otherwise you will have threads waiting to fill  
     the IO buffers again I have some ideas on how to do to take advantage of this when I get there  
+
+STYLE GUIDES used  
+C++: using the c++ core guidelines style guide as much as possible  
+Python3: will use a linter when possible  
+Bash: not sure for this one yet  
 
