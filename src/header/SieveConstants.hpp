@@ -1,6 +1,7 @@
-
 #ifndef SIEVE_CONSTANTS_HPP
 #define SIEVE_CONSTANTS_HPP
+// TODO make all var names lowercase
+// TODO fix namespace name potentially
 namespace SmallSieveInformation {
     constexpr std::size_t THREAD_SIEVE_SIZE = 1U << 15U; 
     constexpr std::size_t THREAD_SIEVE_MOD = THREAD_SIEVE_SIZE - 1U; 
