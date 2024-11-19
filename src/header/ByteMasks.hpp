@@ -10,14 +10,14 @@ namespace ByteInfo {
     constexpr std::size_t bits_per_mask = 8u;
 
     enum Bitmasks : uint8_t {
-        bitmask_0 = 0xFEu;
-        bitmask_1 = 0xFDu;
-        bitmask_2 = 0xFBu;
-        bitmask_3 = 0xF7u;
-        bitmask_4 = 0xEFu;
-        bitmask_5 = 0xDFu;
-        bitmask_6 = 0xBFu;
-        bitmask_7 = 0x7Fu;
+        bitmask_0 = 0xfeU; // 1111 1110
+        bitmask_1 = 0xfdU; // 1111 1101
+        bitmask_2 = 0xfbU; // 1111 1011
+        bitmask_3 = 0xf7U; // 1111 0111
+        bitmask_4 = 0xefU; // 1110 1111
+        bitmask_5 = 0xdfU; // 1101 1111
+        bitmask_6 = 0xbfU; // 1011 1111
+        bitmask_7 = 0x7fU; // 0111 1111
     };
 
     constexpr uint8_t byte_mask_lookup[RB5_PRIMORIAL][bits_per_mask] = {
