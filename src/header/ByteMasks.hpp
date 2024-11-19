@@ -1,8 +1,14 @@
 #ifndef BYTE_MASKS_HPP
 #define BYTE_MASKS_HPP
 
+// need to include file with rb5 primorial????
+
 // TODO fix namespace name.
+// TODO fix name for byte_mask_lookup there has to be a better one
+// TODO change type of byte_mask_lookup to array type maybe
 namespace ByteInfo {
+    constexpr std::size_t bits_per_mask = 8u;
+
     enum {
         MASK0 = 0xFE;
         MASK1 = 0xFD;
@@ -14,7 +20,7 @@ namespace ByteInfo {
         MASK7 = 0x7F;
     };
 
-    const uint8_t MASK_LOOKUP[RB5_PRIMORIAL][BITS_PER_MASK] = {
+    constexpr uint8_t byte_mask_lookup[RB5_PRIMORIAL][bits_per_mask] = {
         {0, 0, 0, 0, 0, 0, 0, 0}, 
         {254, 253, 251, 247, 239, 223, 191, 127},
         {0, 0, 0, 0, 0, 0, 0, 0}, 
