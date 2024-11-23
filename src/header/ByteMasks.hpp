@@ -1,9 +1,8 @@
 #ifndef BYTE_MASKS_HPP
 #define BYTE_MASKS_HPP
 
-// need to include file with rb5 primorial????
+#include "IntegralTypeIncludes.hpp"
 
-// TODO fix namespace name.
 // TODO fix name for byte_mask_lookup there has to be a better one
 // TODO change type of byte_mask_lookup to array type maybe
 namespace ByteInfo {
