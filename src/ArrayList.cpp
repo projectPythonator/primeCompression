@@ -4,6 +4,7 @@ namespace {
     std::vector<uint32_t> array_list;
 }
 
+
 // TODO potentially create class
 namespace ArrayList {
     // I think this is the c++ version of extend in python
