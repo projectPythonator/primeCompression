@@ -1,12 +1,13 @@
 #ifndef SIEVE_BUFFERS_HPP
 #define SIEVE_BUFFERS_HPP
 
-
-#include <ContainerIncludes.hpp> // for arrays idk 
-#include <SieveConstants.hpp>    // for sieve bounds 
+#include "ContainerIncludes.hpp"    // for array
+#include "IntegralTypeIncludes.hpp"
+#include "SieveConstants.hpp"       // for sieve bounds 
 
 // TODO fix naming and typing 
 // TODO change arrays to our own typing
+// TODO update nmae later maybe 
 namespace Sieves {
     std::array<uint8_t, BoundConstants::block_size> single_thread_sieve;
     
