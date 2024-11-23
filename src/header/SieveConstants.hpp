@@ -2,9 +2,10 @@
 #define SIEVE_CONSTANTS_HPP
 // TODO make all var names lowercase
 // TODO fix namespace name potentially
-namespace SmallSieveInformation {
-    constexpr std::size_t THREAD_SIEVE_SIZE = 1U << 15U; 
-    constexpr std::size_t THREAD_SIEVE_MOD = THREAD_SIEVE_SIZE - 1U; 
+namespace BoundConstants {
+    constexpr std::size_t block_count = 8u;
+    constexpr std::size_t block_size = 1U << 15U; 
+    constexpr std::size_t block_mod = block_size - 1U; 
 
 
     // this value is precomputed from the info python program
