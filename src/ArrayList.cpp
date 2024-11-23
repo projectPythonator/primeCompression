@@ -4,9 +4,7 @@ namespace {
     std::vector<uint32_t> array_list;
 }
 
-// TODO fix namespace name
 // TODO potentially create class
-// TODO rename the files 
 namespace ArrayList {
     // I think this is the c++ version of extend in python
     void extendNodeList(std::size_t listSize) {
