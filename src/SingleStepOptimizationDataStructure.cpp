@@ -1,9 +1,4 @@
-// source file for the single step optimzation 
-//
-
-#include "./header/SingleStepOptimization.hpp"
-// #include "./header/IntegralIncludes.hpp"
-// #include "./header/ContainerIncludes.hpp" // replace with ours when done
+#include "header/SingleStepOptimization.hpp"
 
 // TODO update uint32_t to std::uint32_t
 // TODO consider using std::intptr_t or std::int32_t 
@@ -26,7 +21,7 @@ namespace {
 // TODO might be missing a function or two
 // NOTE: we use memory_order::relaxed because we only care that things get done
 //  not the specific order, loading or to do things 
-namespace PlaceHolder{
+namespace SingleStepSection {
     // load will be used till I see if I can do it without safely 
     // even though we know we don't need to
     uint32_t getHeadValueLocked(uint32_t headIndex) {
