@@ -1,22 +1,27 @@
 #include "header/LightLinkedList.hpp"
-// update the namespaces properly
-namespace protectedLinkedList {
 
-LinkedList::LinkedList() {
-    N = 0;
-    head = nullptr;
+namespace {
+    std::vector<uint32_t> array_list;
 }
 
-void LinkedList::pushHead(Node *newHead) {
-    newHead.setNext(this.head);
-    this.head = newHead;
-    this.size++;
-}
+// TODO fix namespace name
+// TODO potentially create class
+// TODO rename the files 
+namespace ArrayList {
+    // I think this is the c++ version of extend in python
+    void extendNodeList(std::size_t listSize) {
+        array_list.resize(array_list.size() + listSize, list_end);
+    }
 
-Node *LinkedList::popHead() {
-    Node * rHead = this.head;
-    this.head = this.head.next;
-    return rHead;
-}
+    void buildNodeList(std::size_t listSize) {
+        array_list.assign(listSize, list_end);
+    }
+    
+    void setNodeNext(uint32_t node, uint32_t newNode) {
+        array_list[node] = newNode;
+    }
 
+    uint32_t getNodeNext(uint32_t node) {
+        return array_list[node];
+    }
 }
