@@ -1,14 +1,9 @@
-//file will be used with functions that apply a pre computed sieve to my sieve blocks 
-//
-// not sure yet what I will need to includ 
-//
+#include "header/PreSieve.hpp"
 
 // TODO fix namespace name MAYBE
 // TODO apply these functions to a class based solution
 // TODO move the presieves into this namespace even if they are stored
-//  in anothre file?
-namespace sieveCompress {
-
+namespace PreSieve {
     void applyPreSieve(std::span<uint8_t> sieve, std::span<uint8_t> preSieve) {
         // Step 1: find start point of presieve with math
         // Step 2: apply the preseive from start
@@ -26,6 +21,4 @@ namespace sieveCompress {
         //      each iteration call applyPreSieve(sieve, span(next_presieve)) ??
         // Optimization apply what is said in other function here?
     }
-
-
 }
