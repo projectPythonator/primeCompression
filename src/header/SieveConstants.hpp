@@ -1,5 +1,8 @@
 #ifndef SIEVE_CONSTANTS_HPP
 #define SIEVE_CONSTANTS_HPP
+
+#include "IntegralTypeIncludes.hpp"
+
 // TODO make all var names lowercase
 // TODO fix namespace name potentially
 namespace BoundConstants {
@@ -10,7 +13,7 @@ namespace BoundConstants {
 
     // this value is precomputed from the info python program
     // it covers all numbers that can take advantage of the loop
-    constexpr std::size_t FAST_SMALL_PRIME_AMT = 14998U;
+    constexpr std::size_t fast_small_prime_amt = 14998U;
 
     // this section we are spliting up the primes into the 8 mod value 
     // these are mearly upper bounds and the actual values will be either  
