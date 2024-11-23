@@ -4,7 +4,6 @@
 #include "IntegralTypeIncludes.hpp"
 
 // TODO make all var names lowercase
-// TODO fix namespace name potentially
 namespace BoundConstants {
     constexpr std::size_t block_count = 8u;
     constexpr std::size_t block_size = 1U << 15U; 
