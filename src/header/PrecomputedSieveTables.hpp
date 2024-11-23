@@ -5,12 +5,10 @@
 #define PRECOMPUTED_LOOKUP_TABLES_HPP
 
 #include "ContainerIncludes.hpp"
-#include "IntegralTypesIncludes.hpp"
+#include "IntegralTypeIncludes.hpp"
 
 // TODO generate the code via python3
-// TODO add in includes 
-// TODO fix namespace name maybe
-namespace LookupTables {
+namespace PresieveLookup {
 
 }
 
