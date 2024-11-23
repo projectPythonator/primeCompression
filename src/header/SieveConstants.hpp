@@ -23,17 +23,17 @@ namespace BoundConstants {
     // this set might be the one that actually hads slower checks needed in the
     // loops but it should be fine
     // TODO need to math out the values for these. I might just use a py script
-    constexpr std::size_t FAST_MEDIUM_MOD_1_AMT  = 0U;
-    constexpr std::size_t FAST_MEDIUM_MOD_7_AMT  = 0U;
-    constexpr std::size_t FAST_MEDIUM_MOD_11_AMT = 0U;
-    constexpr std::size_t FAST_MEDIUM_MOD_13_AMT = 0U;
-    constexpr std::size_t FAST_MEDIUM_MOD_17_AMT = 0U;
-    constexpr std::size_t FAST_MEDIUM_MOD_19_AMT = 0U;
-    constexpr std::size_t FAST_MEDIUM_MOD_23_AMT = 0U;
-    constexpr std::size_t FAST_MEDIUM_MOD_29_AMT = 0U;
+    constexpr std::size_t fast_medium_mod_1_amt  = 0u;
+    constexpr std::size_t fast_medium_mod_7_amt  = 0u;
+    constexpr std::size_t fast_medium_mod_11_amt = 0u;
+    constexpr std::size_t fast_medium_mod_13_amt = 0u;
+    constexpr std::size_t fast_medium_mod_17_amt = 0u;
+    constexpr std::size_t fast_medium_mod_19_amt = 0u;
+    constexpr std::size_t fast_medium_mod_23_amt = 0u;
+    constexpr std::size_t fast_medium_mod_29_amt = 0u;
     
     // full range of the fast medium primes
-    constexpr std::size_t FAST_MEDIUM_TOTAL = 40883U - FAST_SMALL_PRIME_AMT;
+    constexpr std::size_t fast_medium_total = 40883u - fast_small_prime_amt;
 
 }
 #endif
