@@ -1,7 +1,7 @@
 // this file is for primes big enough to take advantage of only needing one 
 // step per fwrite block
 
-#include "/header/ByteMasks.hpp"
+#include "header/SlowPrimesWithSingleStep.hpp"
 
 namespace sieveCompress {
     // only exists here right now as place holder
@@ -16,7 +16,8 @@ namespace sieveCompress {
         SIEVE[currIndex] &= MASK_LOOKUP[mValue][mIndex];
         BIG_INDEX[primeIndex] += kValue * SKIP_VALUE[mIndex] + OFFSET_VALUE[mValue][mIndex];
         BIG_MASK_INDEX[primeIndex]++;
-
+    }
+    void sieveBlock(std::span<uint8_t> sieve, std::size_t block) {
 
     }
 }
