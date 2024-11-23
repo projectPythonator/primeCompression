@@ -1,5 +1,8 @@
-#ifndef LIGHTLINKEDLIST_HPP
-#define LIGHTLINKEDLIST_HPP
+#ifndef ARRAY_LIST_HPP
+#define ARRAY_LIST_HPP
+
+#include "ContainerIncludes.hpp"
+#include "IntegralTypeIncludes.hpp"
 
 // TODO add includes to the other classes
 // TODO change this to class based

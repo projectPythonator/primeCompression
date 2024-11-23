@@ -1,10 +1,11 @@
 // for now this will have division and maybe isqrt??? 
 //
 //
-#include <cinttypes> // this might be able to be replaced
 #ifndef FAST_MATH_HPP
 #define FAST_MATH_HPP
-
+#include "IntegralTypeIncludes.hpp"
+#include <cinttypes> // this might be able to be replaced
+                  
 // TODO does it make more sense
 // TODO check if it makes more sense do the inv consts as __uint128s
 namespace {

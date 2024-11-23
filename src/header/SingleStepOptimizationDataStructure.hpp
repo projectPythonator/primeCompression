@@ -2,8 +2,8 @@
 
 #ifndef SINGLE_STEP_OPTIMIZATION_HPP
 #define SINGLE_STEP_OPTIMIZATION_HPP
-// #include "./header/IntegralIncludes.hpp"
-// #include "./header/ContainerIncludes.hpp" // stays in the header?
+// #include "IntegralIncludes.hpp"
+// #include "ContainerIncludes.hpp" // stays in the header?
 
 // TODO add includes
 // TODO fix the naming of the namespace

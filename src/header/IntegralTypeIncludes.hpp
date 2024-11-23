@@ -1,5 +1,5 @@
-#ifndef INTEGRAL_TYPE_INCLUDES_HPP
-#define INTEGRAL_TYPE_INCLUDES_HPP
+#ifndef INTEGRAL_INCLUDES_HPP
+#define INTEGRAL_INCLUDES_HPP
 
 #include <cstdint> // for fixed size types
 #include <cstddef> // for array indexing and pointer types
