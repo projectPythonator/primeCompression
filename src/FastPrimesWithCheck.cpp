@@ -1,9 +1,9 @@
 // file used for sieving medium primes
 //
-#include "./header/ByteMasks.hpp"
+#include "header/FastPrimesWithCheck.hpp"
 
 // TODO turn into class methods
-namespace sieveCompress {
+namespace SieveCompress {
     #define IS_DONE(maskIndex) \
         if (kValue >= sieveSize) [[unlikely]] \
         { \
