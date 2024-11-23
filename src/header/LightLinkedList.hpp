@@ -3,25 +3,16 @@
 
 #include "LightListNode.hpp"
 
-namespace protectedLinkedList {
+// TODO add includes to the other classes
+// TODO change this to class based
+// TODO might need to fix the 
+namespace ArrayList {
+    // I think this is the c++ version of extend in python
+    void extendNodeList(std::size_t);
+    void buildNodeList(std::size_t);
 
-class LinkedList {
-public:
-    LinkedList();
-    ~LinkedList();
-    void pushHead(Node *);
-    Node *popHead();
-
-    constexpr std::size_t size() {
-        return N;
-    }
-
-private:
-    Node *head;
-    std::size_t N;
-};
-
+    void setNodeNext(uint32_t, uint32_t);
+    uint32_t getNodeNext(uint32_t);
 }
-
 
 #endif
