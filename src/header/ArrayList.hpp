@@ -4,9 +4,7 @@
 #include "ContainerIncludes.hpp"
 #include "IntegralTypeIncludes.hpp"
 
-// TODO add includes to the other classes
 // TODO change this to class based
-// TODO might need to fix the 
 namespace ArrayList {
     // I think this is the c++ version of extend in python
     void extendNodeList(std::size_t);
