@@ -1,18 +1,20 @@
 #ifndef SIEVE_BUFFERS_HPP
 #define SIEVE_BUFFERS_HPP
 
-#include <Vector.hpp> // need this line for arrays and vectors????
-#include <SieveConstants.hpp> // need this line for arrays and vectors????
+
+#include <ContainerIncludes.hpp> // for arrays idk 
+#include <SieveConstants.hpp>    // for sieve bounds 
 
 // TODO fix naming and typing 
+// TODO change arrays to our own typing
 namespace Sieves {
-    Array<uint8_t, SmallSieveInformation::THREAD_SIEVE_SIZE> single_thread_sieve; // maybe need better naming
-    Vector<Array<uint8_t, SmallSieveInformation::THREAD_SIEVE_SIZE>> multi_thread_sieves; // maybe need better naming
+    std::array<uint8_t, BoundConstants::block_size> single_thread_sieve;
+    
+    std::array<
+        std::array<uint8_t, BoundConstants::block_size>, 
+        BoundConstants::block_count> multi_thread_sieve;
 
-    // not sure if want this one
-    // TODO fix write sieve size name
-    Array<uint8_t, SmallSieveInformation::WRITE_SIEVE_SIZE> single_thread_sieve; // maybe need better naming
-
+    void mergeSieveSection(std::size_t, std::size_t);
 }
 
 #endif
