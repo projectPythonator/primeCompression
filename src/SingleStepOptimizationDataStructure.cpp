@@ -1,52 +1,54 @@
 // source file for the single step optimzation 
 //
 
+#include "./header/SingleStepOptimization.hpp"
+// #include "./header/IntegralIncludes.hpp"
+// #include "./header/ContainerIncludes.hpp" // replace with ours when done
 
+// TODO update uint32_t to std::uint32_t
+// TODO consider using std::intptr_t or std::int32_t 
+//  Reason: apparently we might get an index type that is signed plus I need
+//      to conserve space when possible
+namespace {
+    // might just put this inside in the list file
+    constexpr uint32_t list_end = UINT32_MAX;
+
+    // unlocked is for single thread / batch update version
+    // locked for multithread
+    std::vector<uint32_t> list_of_heads_unlocked;
+    std::vector<std::atomic<uint32_t>> list_of_heads_locked;
+}
+
+// TODO turn into a class?
+// TODO move code and vectors to header?
 // TODO same as the header file for this
 // TODO add the actual code and includes
 // TODO might be missing a function or two
+// NOTE: we use memory_order::relaxed because we only care that things get done
+//  not the specific order, loading or to do things 
 namespace PlaceHolder{
-    void updatePrimeRecordInfo(std::size_t primeIndex) {
-        // happens in parrallel
-        // update each info for each sieve 
-        // like its current prime mod index 
-        // its current position in the update new sieve block
-        // maybe its over all prime block or at the very least a offset of its current block
-        // does not actually move the prime node
-    }
-    
-    // find better name for the parameter
-    void updatePrimeRecordPlacement(std::size_t blockIndex) {
-        // happens in single thread 
-        // maybe set mutex on here
-        // for each prime in block
-        //      read its new sieve position
-        //      remove node from current position
-        //      move to next updated block position
-        // unset the mutex for the block
-        // can happen currently to when the other threads are updating non single step sections
-        // other threads will block untill this is done if they finish their sections before 
-        // the positions are updated
-        // NOTE I might update this to break it up abit
+    // load will be used till I see if I can do it without safely 
+    // even though we know we don't need to
+    uint32_t getHeadValueLocked(uint32_t headIndex) {
+        return list_of_heads_locked[headIndex].load(memory_order::relaxed);
     }
 
-    // better name for the span??/
-    void sievePrimesInRange(std::span<uint8_t> sieve, std::span<std::size_t> blockOfPrimeIndexes) {
-        // happens in parrallel with other threads but gets blocks till the previous block updated
-        // wait till mutex not locked
-        // (continue when unlocked but don't lock since nothing happens here
-        // for each index in span
-        //      get currIndex from prime info
-        //      sieve[currIndex] &= bitmasks_lookup[primeMod][currMask];
-        //      updatePrimeRecordInfo(index)
-        // idk if better to pull update call into this function or pass sieve to function call maybe neither
-        // idk if I want this section handled in lock free queue ranges 
-        //      if it is you just return and handle next and everyone blocks till everyone done 
-        //      if not then you just sleep till everyone else done 
-        //  after this threads will merge their data into the bigger sieves block or all into one 
-        //  then send it off to be printed later
+    uint32_t getHeadValueUnlocked(uint32_t headIndex){
+        return list_of_heads_unlocked[headIndex];
     }
 
+    // need to profile this to see how expensive it is
+    // inline or hardcode if too expensive
+    // NOTE: mem order relaxed used because we only care that exhange gets done 
+    //  if this turns out to not work in a function will pull into calling code
+    //  which I am confident it will work there 
+    uint32_t setHeadValueLocked(uint32_t headIndex, uint32_t newHead) {
+        return list_of_heads_locked[headIndex].exchange(newHead, memory_order::relaxed);
+    }
+
+    uint32_t setHeadValueUnlocked(uint32_t headIndex, uint32_t newHead) {
+        return std::exchange(list_of_heads_unlocked[headIndex], newHead);
+    }
 
 
 }
