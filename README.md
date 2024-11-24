@@ -16,6 +16,14 @@ steps are
 3.) adjust the current bounds file [not user friendly that much]  
 4.) ./prog.out > yourFileName.bin [or what ever extention]  
 will give a short mapping of programs to txt files  
+  
+NOTE on Python3 files  
+these files for the most part are just to generate various info in the project.  
+I might just move them to their own directory but they just give info on how I  
+got some of my values and literals  
+like example would be the layout of the fastPrimesWithLoop  
+I got this from printInfoForSievingMod30Class.py which just found cycles  
+
 
   
 BOUND INFO  
