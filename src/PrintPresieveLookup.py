@@ -20,13 +20,14 @@ def endSide():
     print()
 
 def sievePrime(prime, marks, primorial):
-    jumps = [1, 7, 11, 13, 17, 19, 23, 29]
-    for k in range(100000):
-        for jump in jumps:
-            abs_pos = prime * k * 30 + jump * prime
-            if abs_pos >= primorial:
-                return
-            marks.add(abs_pos)
+    jumps = [6, 4, 2, 4, 2, 4, 6, 2]
+    
+    cur = prime 
+    i = 0
+    while cur < primorial:
+        marks.add(cur)
+        cur += (prime * jumps[i % 8])
+        i += 1
 
 def printSievePart(primes):
     mods = {1:1, 7:2, 11:4, 13:8, 17:16, 19:32, 23:64, 29:128}
