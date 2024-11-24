@@ -3,7 +3,6 @@
 
 #include "IntegralTypeIncludes.hpp"
 
-// TODO make all var names lowercase
 namespace BoundConstants {
     constexpr std::size_t block_count = 8u;
     constexpr std::size_t block_size = 1U << 15U; 
@@ -22,15 +21,15 @@ namespace BoundConstants {
     // can simply handle each block efficiently
     // this set might be the one that actually hads slower checks needed in the
     // loops but it should be fine
-    // TODO need to math out the values for these. I might just use a py script
-    constexpr std::size_t fast_medium_mod_1_amt  = 0u;
-    constexpr std::size_t fast_medium_mod_7_amt  = 0u;
-    constexpr std::size_t fast_medium_mod_11_amt = 0u;
-    constexpr std::size_t fast_medium_mod_13_amt = 0u;
-    constexpr std::size_t fast_medium_mod_17_amt = 0u;
-    constexpr std::size_t fast_medium_mod_19_amt = 0u;
-    constexpr std::size_t fast_medium_mod_23_amt = 0u;
-    constexpr std::size_t fast_medium_mod_29_amt = 0u;
+    // values generated from PrintMediumPrimeSizes.py
+    constexpr std::size_t fast_medium_mod_1_amt  = 3229u;
+    constexpr std::size_t fast_medium_mod_7_amt  = 3252u;
+    constexpr std::size_t fast_medium_mod_11_amt = 3244u;
+    constexpr std::size_t fast_medium_mod_13_amt = 3246u;
+    constexpr std::size_t fast_medium_mod_17_amt = 3232u;
+    constexpr std::size_t fast_medium_mod_19_amt = 3210u;
+    constexpr std::size_t fast_medium_mod_23_amt = 3221u;
+    constexpr std::size_t fast_medium_mod_29_amt = 3251u;
     
     // full range of the fast medium primes
     constexpr std::size_t fast_medium_total = 40883u - fast_small_prime_amt;
