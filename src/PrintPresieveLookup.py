@@ -55,7 +55,7 @@ def printSievePart(primes):
     return strOut
 
 def midSide(primess):
-    print('constexpr std::array<std::array<uint8_t>, 16u> presieve_lookup = {\n')
+    print('constexpr std::array<std::initializer_list<uint8_t>, 16u> presieve_lookup = {\n')
     for ind, primes in enumerate(primess):
         strOut = printSievePart(primes)
         if ind != len(primess) - 1:
