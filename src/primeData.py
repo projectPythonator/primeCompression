@@ -1,4 +1,5 @@
 from math import isqrt
+
 START_INDEX = 0
 
 fastPrimesSmallerMaxPrimeEnd = 0
@@ -7,6 +8,7 @@ fastPrimesFullLoopMaxPrimeEnd = 0
 fastPrimesFullLoopMaxIndexEnd = 0
 slowPrimesWithLoopMaxPrimeEnd = 0
 slowPrimesWithLoopMaxIndexEnd = 0
+
 
 def getStartPoint(span):
     global START_INDEX
@@ -23,7 +25,7 @@ def f(prime, ind, span):
     modsp = [7, 11, 13, 17, 19, 23, 29, 31]
     phi = 1
     primo = 1
-    jumps = [(modsp[p] * prime)//30 - (mods[p] * prime)//30 for p in range(8)]
+    jumps = [(modsp[p] * prime) // 30 - (mods[p] * prime) // 30 for p in range(8)]
     maxgap = max(jumps)
     mingap = min(jumps)
     if prime**2 < START_INDEX:
@@ -31,11 +33,12 @@ def f(prime, ind, span):
         fastPrimesSmallerMaxIndexEnd = ind
     if maxgap < span:
         fastPrimesFullLoopMaxPrimeEnd = prime
-        fastPrimesFullLoopMaxIndexEnd = ind 
+        fastPrimesFullLoopMaxIndexEnd = ind
     if mingap >= span:
         slowPrimesWithLoopMaxPrimeEnd = prime
         slowPrimesWithLoopMaxIndexEnd = ind
-                
+
+
 def block_sieve_odd(limit, span):
     """Block sieve that builds up block by block to the correct amount needed.
 
@@ -77,24 +80,48 @@ def boundInfoForSpan(span):
     fastPrimesFullLoopMaxPrimeEnd = fastPrimesFullLoopMaxIndexEnd = 0
     slowPrimesWithLoopMaxPrimeEnd = slowPrimesWithLoopMaxIndexEnd = 0
     getStartPoint(span * 30)
-    block_sieve_odd(1<<30, span)
+    block_sieve_odd(1 << 30, span)
 
-    print('\n')
-    print("printing data for span size of {} representing numbers [0 - {})".format(span, 30 * span))
-    print("with given span highest start point that is below 2**32 is {} the diff between them is {}".format(START_INDEX, 2**32-START_INDEX))
-    print("start point in byte index terms ie i//30 is {}".format(START_INDEX//30))
+    print("\n")
+    print(
+        "printing data for span size of {} representing numbers [0 - {})".format(
+            span, 30 * span
+        )
+    )
+    print(
+        "with given span highest start point that is below 2**32 is {} the diff between them is {}".format(
+            START_INDEX, 2**32 - START_INDEX
+        )
+    )
+    print("start point in byte index terms ie i//30 is {}".format(START_INDEX // 30))
     print("ans bigger than 2**63? {}".format(START_INDEX**2 > 2**63))
     print()
-    print('free loop with small primes go upto  {} th prime with value = {}'.format(fastPrimesSmallerMaxIndexEnd, fastPrimesSmallerMaxPrimeEnd))
-    print('free loop with medium primes go upto {} th prime with value = {}'.format(fastPrimesFullLoopMaxIndexEnd, fastPrimesFullLoopMaxPrimeEnd))
-    print('slower primes not full loop or optimized go till {} th prime with value = {}'.format(slowPrimesWithLoopMaxIndexEnd, slowPrimesWithLoopMaxPrimeEnd))
-    print('past this you can do single step optimization to avoid both observing primes not in the block and costly loop code when you know only a single iteratoin happends')
+    print(
+        "free loop with small primes go upto  {} th prime with value = {}".format(
+            fastPrimesSmallerMaxIndexEnd, fastPrimesSmallerMaxPrimeEnd
+        )
+    )
+    print(
+        "free loop with medium primes go upto {} th prime with value = {}".format(
+            fastPrimesFullLoopMaxIndexEnd, fastPrimesFullLoopMaxPrimeEnd
+        )
+    )
+    print(
+        "slower primes not full loop or optimized go till {} th prime with value = {}".format(
+            slowPrimesWithLoopMaxIndexEnd, slowPrimesWithLoopMaxPrimeEnd
+        )
+    )
+    print(
+        "past this you can do single step optimization to avoid both observing primes not in the block and costly loop code when you know only a single iteratoin happends"
+    )
+
 
 def main():
     print()
-    while ((span := int(eval(input('please enter span you want info for or 0 to exit\n')))) > 0):
+    while (
+        span := int(eval(input("please enter span you want info for or 0 to exit\n")))
+    ) > 0:
         boundInfoForSpan(span)
 
+
 main()
-
-
