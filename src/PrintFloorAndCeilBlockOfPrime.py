@@ -1,6 +1,3 @@
-from math import isqrt
-
-
 def is_prime(n):
     if n % 2 == 0:
         return n == 2

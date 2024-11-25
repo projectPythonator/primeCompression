@@ -23,8 +23,6 @@ def f(prime, ind, span):
     global slowPrimesWithLoopMaxPrimeEnd, slowPrimesWithLoopMaxIndexEnd
     mods = [1, 7, 11, 13, 17, 19, 23, 29]
     modsp = [7, 11, 13, 17, 19, 23, 29, 31]
-    phi = 1
-    primo = 1
     jumps = [(modsp[p] * prime) // 30 - (mods[p] * prime) // 30 for p in range(8)]
     maxgap = max(jumps)
     mingap = min(jumps)
@@ -48,8 +46,8 @@ def block_sieve_odd(limit, span):
     n, limit = limit, limit + 10
     primeIndex = 1
     end_sqrt, end_limit = isqrt(limit) + 1, (limit - 1) // 2
-    sieve_and_block, primes, smaller_primes = [True] * (end_sqrt + 1), [2], []
-    app, smaller_app = primes.append, smaller_primes.append
+    sieve_and_block, smaller_primes = [True] * (end_sqrt + 1), []
+    smaller_app = smaller_primes.append
     for prime in range(3, end_sqrt, 2):
         if sieve_and_block[prime]:
             smaller_app([prime, (prime * prime - 1) // 2])
