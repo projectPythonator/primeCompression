@@ -33,7 +33,7 @@ some information on the bounds and ranges I am planning to work with
 3.) bigger sieve size will be max(8 * 2^15, n * 2^15)  
 4.) TBD if n is a power of 2 or not  
 5.) from my python program for bounds I found the following  
-	Small Sieve  
+&emsp;Small Sieve  
 		- we can fit the first 14998 primes with full loops + switch   
 		- we can fit the first 40883 primes into switch functions(a bit slower)   
 		- past this we can apply single step optimization code   
