@@ -11,6 +11,6 @@
 // TODO apply correct masks
 // TODO missing functions 
 namespace SieveCompress {
-    void crossOff(uint8_t *, std::size_t, std::size_t, std::size_t);
+    void crossOff(std::span<uint8_t>, std::size_t, std::size_t);
 }
 

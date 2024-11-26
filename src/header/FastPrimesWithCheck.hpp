@@ -9,13 +9,13 @@
 // TODO turn into class methods
 namespace SieveCompress {
 
-    void crossOff_1(uint8_t *,  std::size_t, std::size_t, std::size_t);
-    void crossOff_7(uint8_t *,  std::size_t, std::size_t, std::size_t);
-    void crossOff_11(uint8_t *, std::size_t, std::size_t, std::size_t);
-    void crossOff_13(uint8_t *, std::size_t, std::size_t, std::size_t);
-    void crossOff_17(uint8_t *, std::size_t, std::size_t, std::size_t);
-    void crossOff_19(uint8_t *, std::size_t, std::size_t, std::size_t);
-    void crossOff_23(uint8_t *, std::size_t, std::size_t, std::size_t);
-    void crossOff_29(uint8_t *, std::size_t, std::size_t, std::size_t);
+    void crossOff_1(std::span<uint8_t>, std::size_t, std::size_t);
+    void crossOff_7(std::span<uint8_t>, std::size_t, std::size_t);
+    void crossOff_11(std::span<uint8_t>, std::size_t, std::size_t);
+    void crossOff_13(std::span<uint8_t>, std::size_t, std::size_t);
+    void crossOff_17(std::span<uint8_t>, std::size_t, std::size_t);
+    void crossOff_19(std::span<uint8_t>, std::size_t, std::size_t);
+    void crossOff_23(std::span<uint8_t>, std::size_t, std::size_t);
+    void crossOff_29(std::span<uint8_t>, std::size_t, std::size_t);
 } 
 
