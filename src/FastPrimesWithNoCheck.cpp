@@ -2,7 +2,6 @@
 #include "header/FastPrimesWithNoCheck.hpp"
 
 // TODO needs class extention
-// TODO change sieve to span if possible removes size param
 // TODO check how expensive cleaning up magic numbers is
 // TODO might need to switch this function up if too slow
 // TODO change maskIndex typing maybe
@@ -10,8 +9,7 @@
 // TODO missing functions 
 namespace SieveCompress {
     void crossOff(
-            uint8_t *sieve, 
-            std::size_t sieveSize, 
+            std::span<uint8_t> sieve, 
             std::size_t startIndex, 
             std::size_t endIndex) {
         #define IS_DONE(maskIndex) \
@@ -21,11 +19,11 @@ namespace SieveCompress {
                 goto next_prime; \
             }
 
-        
+        std::sieveSize = sieve.size();
         for (std::size_t primeIndex = startIndex; primeIndex < endIndex; primeIndex++) {
-            std::size_t byteIndex;   // represents the current global index of this prime
-            std::size_t kValue;         // place holder for 30 * k + b for k
-            std::size_t maskIndex;      // modified version of (byteIndex % 30) 
+            uint64_t byteIndex = fast_primes_byte[primeIndex];   // represents the current global index of this prime
+            uint16_t kValue    = fast_primes_kvalue[primeIndex]; // place holder for 30 * k + b for k
+            uint8_t maskIndex  = fast_primes_mask[primeIndex];   // modified version of (byteIndex % 30) 
             switch (maskIndex) {
                 // handles primes of form 30 * k + 1
                 for (;;) {
