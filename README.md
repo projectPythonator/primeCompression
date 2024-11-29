@@ -23,7 +23,6 @@ I might just move them to their own directory but they just give info on how I
 got some of my values and literals  
 like example would be the layout of the fastPrimesWithLoop  
 I got this from printInfoForSievingMod30Class.py which just found cycles  
-edit
 
   
 BOUND INFO  
