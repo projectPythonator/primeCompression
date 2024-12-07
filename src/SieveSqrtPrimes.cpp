@@ -7,6 +7,7 @@ namespace {
     }
 }
 
+// TODO needs testing the python version does work but this version is untested
 namespace SqrtPrimes {
     void blockSieveOdd(std::span<uint8_t> sieve, uint64_t limit) {
         constexpr uint64_t sqrtBlock = round(sqrt(limit)) + 1;
