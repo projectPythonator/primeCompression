@@ -6,10 +6,9 @@ namespace {
     constexpr std::size_t max_16_digit = 17u;
     constexpr std::size_t max_20_digit = 21u;
     constexpr std::uint64_t base = 10u;
-}
 
-namespace EndPointConversions {
-    // change this to 3 functions with asserts, 9, 16, 20
+    // represents functions to use, 0-9 is _9d, 10-16 is _16d, and the rest are _20d
+    constexpr int size_lookup[max_20_digit] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2};
     std::uint32_t getNextNumberBase10_9d(std::span<const std::uint8_t> number) {
         assert(number.size() < max_9_digit);
         std::uint32_t result = 0;
@@ -35,14 +34,28 @@ namespace EndPointConversions {
         return result;
     }
 
+}
+
+namespace EndPointConversions {
+
+    std::uint64_t getNextNumberBase10_XXd(std::span<const std::uint8_t> number) {
+        // can probably change these into function pointers maybe
+        assert(number.size() < max_20_digit); 
+        switch(size_lookup[number.size()]) {
+            case 0: return (std::uint64_t) getNextNumberBase10_9d(number);
+            case 1: return getNextNumberBase10_16d(number);
+            case 2: return getNextNumberBase10_20d(number);
+            default: perror("assert check Failed"); return 0;
+        }
+    }
+
+
     std::uint64_t getNextNumberBase10(std::span<const std::uint8_t> number) {
         std::uint64_t result = 0;
         for (const std::uint8_t digit: number)
             result = result * base + digit;
         return result;
     }
-
-
 
     void convertTextBlock(
             std::span<const std::uint8_t> numbers, 
