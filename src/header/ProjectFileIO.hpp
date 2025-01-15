@@ -25,6 +25,8 @@ namespace projectIO {
 
     void openInStreamInTextAndSetBufSize(char *);
     void openOutStreamInTextAndSetBufSize(char *);
+
+    void openFiles(const char *, const char *);
    
     void readInfoForProgram(const char *, uint64_t &, uint64_t &);
     void readBufferTillNL(char *, size_t); 
