@@ -3,13 +3,13 @@
 
 #include "ContainerIncludes.hpp"
 #include "IntegralTypeIncludes.hpp"
+#include "UtilityIncludes.hpp"
 
 
 namespace EndPointConversions {
-    // change this to 3 functions with asserts 9, 16, and 20
-    void addChunkBase10ToBuffer(std::span<std::uint8_t>, std::uint32_t);
+    void addNextNumberBase10_XXd(std::span<std::uint8_t>, std::uint64_t);
 
-    void addNumberBase10ToBuffer(std::span<std::uint8_t>, std::uint64_t);
+    void addNextNumberBase10(std::span<std::uint8_t>, std::uint64_t);
 
     std::size_t convertPrimesBlock(std::span<const std::uint64_t>, std::span<std::uint8_t>);
 }

@@ -9,6 +9,7 @@ namespace {
 
     // represents functions to use, 0-9 is _9d, 10-16 is _16d, and the rest are _20d
     constexpr int size_lookup[max_20_digit] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2};
+
     std::uint32_t getNextNumberBase10_9d(std::span<const std::uint8_t> number) {
         assert(number.size() < max_9_digit);
         std::uint32_t result = 0;
@@ -48,7 +49,6 @@ namespace EndPointConversions {
             default: perror("assert check Failed"); return 0;
         }
     }
-
 
     std::uint64_t getNextNumberBase10(std::span<const std::uint8_t> number) {
         std::uint64_t result = 0;
