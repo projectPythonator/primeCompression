@@ -2,10 +2,10 @@
 #include <cassert>
 
 namespace {
-    constexpr uint64_t max_9_digit = 10u;
-    constexpr uint64_t max_16_digit = 17u;
-    constexpr uint64_t max_20_digit = 21u;
-    constexpr uint64_t base = 10u;
+    constexpr std::size_t max_9_digit  = 10u;
+    constexpr std::size_t max_16_digit = 17u;
+    constexpr std::size_t max_20_digit = 21u;
+    constexpr std::uint64_t base = 10u;
 }
 
 namespace EndPointConversions {
@@ -36,8 +36,12 @@ namespace EndPointConversions {
     }
 
     std::uint64_t getNextNumberBase10(std::span<const std::uint8_t> number) {
-        return 0;
+        std::uint64_t result = 0;
+        for (const std::uint8_t digit: number)
+            result = result * base + digit;
+        return result;
     }
+
 
 
     void convertTextBlock(
