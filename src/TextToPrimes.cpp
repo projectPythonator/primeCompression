@@ -1,19 +1,44 @@
 #include "header/TextToPrimes.hpp"
+#include <cassert>
 
 namespace {
+    constexpr uint64_t max_9_digit = 10u;
+    constexpr uint64_t max_16_digit = 17u;
+    constexpr uint64_t max_20_digit = 21u;
     constexpr uint64_t base = 10u;
 }
 
 namespace EndPointConversions {
     // change this to 3 functions with asserts, 9, 16, 20
-    std::uint64_t getNextNumberBase10(std::span<const std::uint8_t> number) {
-        //assert(number.size() < 17)
-        // seems to unroll better with assers will profile later
+    std::uint32_t getNextNumberBase10_9d(std::span<const std::uint8_t> number) {
+        assert(number.size() < max_9_digit);
+        std::uint32_t result = 0;
+        for (std::size_t b = 0; b < number.size(); b++) 
+            result = result * base + number[b];
+        return result;
+    }
+
+    std::uint64_t getNextNumberBase10_16d(std::span<const std::uint8_t> number) {
+        assert(number.size() < max_16_digit);
         std::uint64_t result = 0;
         for (std::size_t b = 0; b < number.size(); b++) 
             result = result * base + number[b];
         return result;
     }
+
+    std::uint64_t getNextNumberBase10_20d(std::span<const std::uint8_t> number) {
+        assert(number.size() < max_20_digit); // do I need this? maybe
+        std::uint64_t result = 0;
+        #pragma GCC unroll 4 // need to add in clang and mvvc
+        for (std::size_t b = 0; b < number.size(); b++) 
+            result = result * base + number[b];
+        return result;
+    }
+
+    std::uint64_t getNextNumberBase10(std::span<const std::uint8_t> number) {
+        return 0;
+    }
+
 
     void convertTextBlock(
             std::span<const std::uint8_t> numbers, 
