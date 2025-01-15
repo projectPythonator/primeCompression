@@ -9,6 +9,7 @@ Updates: Scope change listed in last commit now this project is just handling li
 CURRENT_STATE   
 need to get IO hooked up and a few more things in place   
 with how i programmed it we should be able to drop a few different multi thread versions to test the best one   
+No longer need the move data files I think.   
   
 CURRENT USAGE   
 None yet doesn't work as a program but will fix the make file   
