@@ -4,11 +4,11 @@ INCS_DIR := ./src/header
 SRCS_DIR := ./src
 
 # find the source files and header files
-SRCS=$(shell find $(SRCS_DIR) -name '*.cc')
-INCS=$(shell find $(INCS_DIR) -name '*.h')
+SRCS=$(shell find $(SRCS_DIR) -name '*.cpp')
+INCS=$(shell find $(INCS_DIR) -name '*.hpp')
 # generate obj and header object file strings
-OBJS=$(patsubst $(SRCS_DIR)/%.cc,$(OBJS_DIR)/%.o,$(SRCS))
-INC_OBJS=$(patsubst $(INCS_DIR)/%.h,$(OBJS_DIR)/%.o,$(INCS))
+OBJS=$(patsubst $(SRCS_DIR)/%.cpp,$(OBJS_DIR)/%.o,$(SRCS))
+INC_OBJS=$(patsubst $(INCS_DIR)/%.hpp,$(OBJS_DIR)/%.o,$(INCS))
 # generate the target strings with a filter on the header strings (might break if gets more complex)
 TARGETS=$(patsubst $(OBJS_DIR)/%.o,$(BUILD_DIR)/%.out,$(filter-out $(INC_OBJS),$(OBJS)))
 
@@ -28,7 +28,7 @@ OBJECT_FILES: $(OBJS)
 	
 PROGRAMS: $(TARGETS)
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.cc
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@ 
 
 $(BUILD_DIR)/%.out: $(OBJS_DIR)/%.o
