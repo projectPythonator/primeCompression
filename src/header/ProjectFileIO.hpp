@@ -1,11 +1,10 @@
-#ifndef SIEVE_FILE_IO_HPP
-#define SIEVE_FILE_IO_HPP
+#ifndef PROJECT_FILE_IO_HPP
+#define PROJECT_FILE_IO_HPP
 
 #include "IntegralTypeIncludes.hpp"
 #include "ContainersIncludes.hpp"
 #include <cinttypes> // for fixed width scan and print types
 
-// TODO better namespace name
 // TODO fix typing am going to migrate to using fstream idk how good or bad it will be
 namespace projectIO {
     inline bool eof_not_read = true;
@@ -20,17 +19,17 @@ namespace projectIO {
     std::size_t readTillNL(std::span<std::uint8_t>);
     std::size_t readBlock_1Byte(std::span<std::uint8_t>);
 
-    std::size_t readblocktillnl(std::span<std::uint8_t>);
-    std::size_t readblocknbytes(std::span<std::uint8_t>);
+    std::size_t readBlockTillNL(std::span<std::uint8_t>);
+    std::size_t readBlocknBytes(std::span<std::uint8_t>);
 
-    std::size_t readblock_8byte(std::span<std::uint64_t>); 
+    std::size_t readBlock_8Byte(std::span<std::uint64_t>); 
 
-    void openinstreaminbinaryandsetbufsize(char *); 
-    void openoutstreaminbinaryandsetbufsize(char *); 
-    void openinstreamintextandsetbufsize(char *);
-    void openoutstreamintextandsetbufsize(char *);
+    void openInStreamInBinaryAndSetBufsize(char *); 
+    void openOutStreamInBinaryAndSetBufsize(char *); 
+    void openInStreamInTextAndSetBufsize(char *);
+    void openOutStreamInTextAndSetBufsize(char *);
 
-    void readinfoforprogram(std::span<char>, std::span<char>);
+    void readInfoForProgram(std::span<char>, std::span<char>);
 }
 // keeping this in case it happens to be faster
 /*
