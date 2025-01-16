@@ -36,13 +36,17 @@ namespace projectIO {
 
     void writeBlock_1Byte(std::span<std::uint8_t> buf) {
         //fwrite_unlocked(buf.data(), 1u, buf.size(), file_out_system);
-        add_zero_factor(buf);
         std::fwrite(buf.data(), 1u, buf.size(), file_out_system);
     }
 
     void writeBlock_8Byte(std::span<std::uint64_t> buf) {
         //fwrite_unlocked(buf.data(), 8u, buf.size(), file_out_system);
         std::fwrite(buf.data(), 8u, buf.size(), file_out_system);
+    }
+
+    void writeBlockOfText(std::span<std::uint8_t> buf) {
+        add_zero_factor(buf);
+        writeBlock_1Byte(buf);
     }
 
     void flushBuffer(std::span<std::uint8_t> buf) {
@@ -75,7 +79,7 @@ namespace projectIO {
         return bytesRead;
     }
 
-    std::size_t readblock_8byte(std::span<std::uint64_t> buf) {
+    std::size_t readBlock_8Byte(std::span<std::uint64_t> buf) {
         //std::size_t bytesread = fread_unlocked(buf.data(), 8u, buf.size(), file_in_stream);
         std::size_t bytesread = std::fread(buf.data(), 8u, buf.size(), file_in_stream);
         eof_not_read = (0 == std::feof(file_in_stream));
@@ -90,13 +94,13 @@ namespace projectIO {
         return bytesread;
     }
 
-    std::size_t readBlocknBytes(std::span<std::uint8_t> buf) {
+    std::size_t readBlockNBytes(std::span<std::uint8_t> buf) {
         std::size_t bytesRead = readBlock_1Byte(buf);
         remove_zero_factor(buf);
         return bytesRead;
     }
 
-    void openinstreaminbinaryandsetbufsize(char *filename) {
+    void openInStreamInBinaryAndSetBufSize(char *filename) {
         if (0 == std::strncmp(filename, "stdin\0", 5)) {
             file_in_stream = std::freopen(nullptr, "rb", stdin);
         } else {
@@ -104,15 +108,7 @@ namespace projectIO {
         }
     }
 
-    void openoutstreaminbinaryandsetbufsize(char *filename) {
-        if (0 == std::strncmp(filename, "stdout\0", 6)) {
-            file_out_stream = std::freopen(nullptr, "wb", stdout);
-        } else {
-            file_out_stream = std::fopen(filename, "wb+");
-        }
-    }
-
-    void openinstreamintextandsetbufsize(char *filename) {
+    void openInStreamInTextAndSetBufSize(char *filename) {
         if (0 == std::strncmp(filename, "stdin\0", 5)) {
             file_in_stream = std::freopen(nullptr, "r", stdin);
         } else {
@@ -120,7 +116,16 @@ namespace projectIO {
         }
     }
 
-    void openoutstreamintextandsetbufsize(char *filename) {
+    void openOutStreamInBinaryAndSetBufSize(char *filename) {
+        if (0 == std::strncmp(filename, "stdout\0", 6)) {
+            file_out_stream = std::freopen(nullptr, "wb", stdout);
+        } else {
+            file_out_stream = std::fopen(filename, "wb+");
+        }
+    }
+
+
+    void openOutStreamInTextAndSetBufSize(char *filename) {
         if (0 == std::strncmp(filename, "stdout\0", 6)) {
             file_out_stream = std::freopen(nullptr, "w", stdout);
         } else {
@@ -128,20 +133,31 @@ namespace projectIO {
         }
     }
 
-    void readinfoforprogram(std::span<char> infilename, std::span<char> outfilename) {
-        assert(infilename.size()  < filename_max);
-        assert(outfilename.size() < filename_max);
-
-        outfilename[std::strcspn(outfilename, "\n")] = '\0';
-        infilename[std::strcspn(infilename, "\n")] = '\0';
-
-        openoutstreaminbinaryandsetbufsize(outfilename.data());
-        checkopenfile(file_out_stream);
-        openinstreaminbinaryandsetbufsize(infilename.data());
-        checkopenfile(file_in_stream);
-
-        setourbufsize(file_in_stream);
-        setourbufsize(file_out_stream);
+    void setFileForProgram(std::span<char> fileName, FileModeCode op) {
+        assert(fileName.size()  < filename_max);
+        assert(fileName.end() == '\n');
+        FILE *fStream = nullptr;
+        fileName[std::strcspn(fileName, "\n")] = '\0';
+        switch (op) {
+            case inputText:
+                openInStreamInTextAndSetBufSize(fileName);
+                fStream = file_in_stream;
+                break;
+            case inputBinary:
+                openInStreamInBinaryAndSetBufSize(fileName);
+                fStream = file_in_stream;
+                break;
+            case outputText:
+                openOutStreamInTextAndSetBufSize(fileName);
+                fStream = file_out_stream;
+                break;
+            case outputBinary:
+                openOutStreamInBinaryAndSetBufSize(fileName);
+                fStream = file_out_stream;
+                break;
+        }
+        checkopenfile(fStream);
+        setourbufsize(fStream);
     }
 }
 
