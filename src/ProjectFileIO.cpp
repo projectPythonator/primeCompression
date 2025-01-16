@@ -1,7 +1,6 @@
 #include "header/ProjectFileIO.hpp"
 #include <cassert>
 
-// TODO add in buffers potential
 // moved from header to source since I don't think we need to project to see these
 namespace {
     constexpr std::uint8_t unsigned_zero = '0';
