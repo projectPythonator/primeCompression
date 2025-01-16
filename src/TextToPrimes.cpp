@@ -29,7 +29,7 @@ namespace {
     std::uint64_t getNextNumberBase10_20d(std::span<const std::uint8_t> number) {
         assert(number.size() < max_20_digit); // do I need this? maybe
         std::uint64_t result = 0;
-        #pragma GCC unroll 4 // need to add in clang and mvvc
+        #pragma GCC unroll 8 // need to add in clang and mvvc
         for (std::size_t b = 0; b < number.size(); b++) 
             result = result * base + number[b];
         return result;
@@ -52,6 +52,7 @@ namespace EndPointConversions {
 
     std::uint64_t getNextNumberBase10(std::span<const std::uint8_t> number) {
         std::uint64_t result = 0;
+        #pragma GCC unroll 8 // need to add in clang and mvvc
         for (const std::uint8_t digit: number)
             result = result * base + digit;
         return result;
