@@ -67,7 +67,6 @@ namespace {
         {"-v"           , verbose_op},
         {"--verbose"    , verbose_op}
     };*/
-
     void init_cli_options() {
         cli_options.emplace("--fast", level_1);
         cli_options.emplace("-0", level_0);
@@ -111,6 +110,7 @@ namespace {
         cli_options.emplace("-v"           , verbose_op);
         cli_options.emplace("--verbose"    , verbose_op);
     }
+
 }
 
 namespace Parser {
