@@ -3,6 +3,7 @@
 #include "IntegralTypeIncludes.hpp"
 #include "ContainerIncludes.hpp"
 #include <string>
+#include <unordered_map>
 
 namespace Parser {
 

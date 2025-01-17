@@ -4,10 +4,7 @@
 // Prog [options] inputFile
 // if inputfile isn't selected the stdin option must be used
 namespace {
-    constexpr std::size_t level_count = 12;
-    constexpr std::size_t help_count = 2;
-    constexpr std::size_t force_count = 2;
-    enum op_codes {
+    enum cli_op_codes {
         level_0,
         level_1,
         level_2,
@@ -24,9 +21,11 @@ namespace {
         version_op,
         verbose_op,
         decompress_op
-    }
+    };
 
-    constexpr std::unordered_map<std::string, op_codes> cli_options = {
+    std::unordered_map<std::string, cli_op_codes> cli_options;
+        /*
+        {"--fast", level_1},
         {"-0", level_0},
         {"-1", level_1},
         {"-2", level_2},
@@ -37,7 +36,6 @@ namespace {
         {"-7", level_6},
         {"-8", level_6},
         {"-9", level_6},
-        {"--fast", level_1},
         {"--best", level_6},
         
         {"-h"    , help_op},
@@ -66,13 +64,60 @@ namespace {
         {"--decompress" , decompress_op},
         {"--uncompress" , decompress_op},
 
-
         {"-v"           , verbose_op},
         {"--verbose"    , verbose_op}
-    };
+    };*/
+
+    void init_cli_options() {
+        cli_options.emplace("--fast", level_1);
+        cli_options.emplace("-0", level_0);
+        cli_options.emplace("-1", level_1);
+        cli_options.emplace("-2", level_2);
+        cli_options.emplace("-3", level_3);
+        cli_options.emplace("-4", level_4);
+        cli_options.emplace("-5", level_5);
+        cli_options.emplace("-6", level_6);
+        cli_options.emplace("-7", level_6);
+        cli_options.emplace("-8", level_6);
+        cli_options.emplace("-9", level_6);
+        cli_options.emplace("--best", level_6);
+        
+        cli_options.emplace("-h"    , help_op);
+        cli_options.emplace("--help", help_op);
+
+        cli_options.emplace("-f"       , force_op);
+        cli_options.emplace("--force"  , force_op);
+
+        cli_options.emplace("-j"       , job_op);
+        cli_options.emplace("--jobs"   , job_op);
+
+        cli_options.emplace("-t"       , test_op);
+        cli_options.emplace("--test"   , test_op);
+
+        cli_options.emplace("-c"           , stdout_op);
+        cli_options.emplace("--stdout"     , stdout_op);
+        cli_options.emplace("--to-stdout"  , stdout_op);
+
+        cli_options.emplace("-L"           , license_op);
+        cli_options.emplace("--license"    , license_op);
+
+        cli_options.emplace("-V"           , version_op);
+        cli_options.emplace("--version"    , version_op);
+
+        cli_options.emplace("-d"           , decompress_op);
+        cli_options.emplace("--decompress" , decompress_op);
+        cli_options.emplace("--uncompress" , decompress_op);
+
+        cli_options.emplace("-v"           , verbose_op);
+        cli_options.emplace("--verbose"    , verbose_op);
+    }
 }
 
 namespace Parser {
 
+
+    void preset() {
+        init_cli_options();
+    }
 
 }
