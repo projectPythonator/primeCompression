@@ -4,6 +4,7 @@
 // Prog [options] inputFile
 // if inputfile isn't selected the stdin option must be used
 namespace {
+    /*
     enum cli_op_codes {
         level_0,
         level_1,
@@ -22,6 +23,32 @@ namespace {
         verbose_op,
         decompress_op
     };
+    */
+
+    enum cli_op_codes {
+        level_0,
+        level_1,
+        level_2,
+        level_3,
+        level_4,
+        level_5,
+        level_6,
+        job_op,
+        test_op,
+        force_op,
+        stdout_op,
+        verbose_op,
+        decompress_op
+    };
+
+    // these codes print info then force exit the prog
+    // first one seen is used
+    enum cli_static_switches {
+        help_op,
+        license_op,
+        version_op,
+    };
+
 
     constexpr std::array<std::string_view, 32> cli_options_values = {
         "-0",
@@ -149,7 +176,8 @@ namespace Parser {
         return index;
     }
 
-    void handle_arg(cli_op_codes op) {
+    void handle_arg() {
+        cli_op_codes op = level_0;
         switch (op) {
             case level_0: break;
             case level_1: break;
@@ -171,7 +199,6 @@ namespace Parser {
     }
 
     void handleArg(const std::span<const char> token, std::span<char> fileName, std::span<std::size_t> values) {
-        std::size_t isOption(token)
 
     }
 
