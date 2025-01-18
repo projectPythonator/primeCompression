@@ -110,23 +110,31 @@ namespace {
         verbose_op,
         verbose_op
     };
-
-   cli_op_codes last_op; 
-}
-
-namespace Parser {
     bool isNumber(const std::span<const char> token) {
         return std::all_of(token.begin(), token.end(), [](auto &el) { return std::isdigit(el); } );
     }
  
-    bool validFile(const std::span<const char> token) {
+    bool isValidFile(const std::span<const char> token) {
         std::filesystem::path filePath(token.begin(), token.end());
         return std::filesystem::exists(filePath);
     }
 
-    void handleOther(const std::span<const char> token, std::span<char> suffix, std::span<char> fileName) {
+   //cli_op_codes last_op;  // used later
+}
 
+namespace Parser {
 
+    void handleNotOption(const std::span<const char> token, std::span<char> fileName, std::size_t &threadCount) {
+        if (isNumber(token)) {
+            perror("multi threads not implemented yet!");
+            return;
+        } else {
+            if (!isValidFile(token)) {
+                perror("File name given was not valid");
+                return;
+            }
+            std::copy(token.begin(), token.end(), fileName.begin());
+        }
     }
 
     std::size_t isOption(std::span<const char> token) {
