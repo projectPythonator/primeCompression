@@ -11,7 +11,7 @@ namespace {
     }
 }
 
-namespace pending {
+namespace SieveSegment {
     void sievePrime(std::span<std::uint8_t> segment, std::uint64_t prime) {
         setJumpsForPrime(prime);
         for (std::size_t i = 0; i < segment.size(); i += prime) {

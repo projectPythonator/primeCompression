@@ -10,7 +10,8 @@ namespace EndpointConversion {
      * @return 8 byte prime number
      */
     std::uint64_t extractNextPrime(std::uint64_t block, std::uint8_t mask) {
-        return ProjectConstants::rb5_primorial * block + ProjectConstants::mask_to_offset[(-mask & mask)];
+        return ProjectConstants::primorial_values[ProjectConstants::rb5_index] * block 
+            + ProjectConstants::mask_to_offset[(-mask & mask)];
     }
 
     /**
@@ -27,7 +28,7 @@ namespace EndpointConversion {
      *  speed. The calls were consistent though so will use them until this is a bottle neck.
      */
     void compressBlock(const std::span<std::uint64_t> primes_in, std::vector<std::uint8_t> primes_out) {
-        std::size_t blockSize = fastDivideBy30(primes_in.back()) - fastDivideBy30(primes_in.front());
+        std::size_t blockSize = FastMath::fastDivideBy30(primes_in.back()) - FastMath::fastDivideBy30(primes_in.front());
         primes_out.assign(blockSize, 0);
         for(const auto& prime: primes_in)
             primes_out[FastMath::fastDivideBy30(prime) % blockSize] |= ProjectConstants::offset_to_mask[FastMath::fastModBy30(prime)];

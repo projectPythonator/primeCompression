@@ -2,8 +2,7 @@
 
 namespace {
     void returnMemory(std::vector<std::uint8_t> &obj) {
-        tmpIn.clear();
-        tmpOut.clear();
+        obj.clear();
     }
 }
 
@@ -11,16 +10,16 @@ namespace {
 // TODO change const char * to string or something
 // TODO figure out compressed primes typing
 namespace InitData {
-    void prepLevelChange(bool isCompress, std::size_t rbxlevel) {
+    void prepLevelChange(bool isCompress, std::size_t rbxLevel) {
         std::vector<std::uint8_t> tmpIn;
         std::vector<std::uint8_t> tmpOut;
         CompressionLevelConversion::adjustResultBufferSize(tmpIn, tmpOut, isCompress, rbxLevel);
-        std::size_t adjustedSize = std::max(tmpIn.size(): tmpOut.size());
+        std::size_t adjustedSize = std::max(tmpIn.size(), tmpOut.size());
         returnMemory(tmpIn);
         returnMemory(tmpOut);
         std::vector<std::uint8_t> tmpVec(adjustedSize, 0);
         CompressionLevelConversion::adjustDATContainers(isCompress, rbxLevel);
-        SieveSegment::sieveSegment(std::span<std::uint8_t>(tmpVec), rbxLevel);
+        SieveSegment::sieveSegment(std::span<std::uint8_t>(tmpVec.begin(), tmpVec.size()), rbxLevel);
         CompressionLevelConversion::fillDATContainers(std::span<std::uint8_t>(tmpVec), isCompress);
         returnMemory(tmpVec);
     }

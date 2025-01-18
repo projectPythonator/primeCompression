@@ -87,9 +87,9 @@ namespace EndPointConversions {
         // can probably change these into function pointers maybe
         assert(number.size() < max_20_digit); 
         switch(size_lookup[number.size()]) {
-            case 0: addNextNumberBase10_9d(number, (uint32_t)n);
-            case 1: addNextNumberBase10_16d(number, n);
-            case 2: addNextNumberBase10_20d(number, n);
+            case 0: addNextNumberBase10_9d(number, (uint32_t)n); break;
+            case 1: addNextNumberBase10_16d(number, n);         break;
+            case 2: addNextNumberBase10_20d(number, n);         break;
             default: perror("assert check Failed"); return;
         }
     }

@@ -1,6 +1,7 @@
 #ifndef BUILD_RUNTIME_DATA_HPP
 #define BUILD_RUNTIME_DATA_HPP
 
+#include "BuildRunTimeData.hpp"
 #include "ContainerIncludes.hpp"
 #include "IntegralTypeIncludes.hpp"
 #include "ChangeCompressionLevel.hpp"

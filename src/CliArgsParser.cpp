@@ -40,7 +40,8 @@ namespace {
         stdout_op,
         verbose_op,
         recompress_op,
-        decompress_op
+        decompress_op,
+        default_op
     };
 
     constexpr std::array<std::string_view, 30> cli_project_options = {
@@ -115,6 +116,7 @@ namespace {
         help_op,
         license_op,
         version_op,
+        default_op
     };
 
     constexpr std::array<std::string_view, 6> cli_static_options = {
@@ -132,11 +134,11 @@ namespace {
         license_op,
         license_op,
         version_op,
-        version_op
+        version_op,
     };
 
-    cli_static_switches last_static;
-    cli_project_switches last_project;
+    cli_static_switches last_static = cli_static_switches::default_op;
+    cli_project_switches last_project = cli_static_switches::default_op;
 
     std::size_t staticIndex(const std::span<const char> token) {
         std::basic_string_view token_view(token.data(), token.size());
@@ -182,28 +184,12 @@ namespace {
         return std::filesystem::exists(filePath);
     }
 
-}
-
-namespace Parser {
-    void handleNotOption(const std::span<const char> token, std::span<char> fileName, std::size_t &threadCount) {
-        if (isNumber(token)) {
-            if (last_project != job_op) {
-                perror("Last option was not -T");
-                return;
-            }
-            threadCount = stoull(std::string(token.begin(), token.end()));
-        } else if (isValidFile(token)) {
-            std::copy(token.begin(), token.end(), fileName.begin());
-        } else {
-            perror("File name given was not valid");
-        }
-    }
-
     void handleStaticSwitches(cli_static_switches op) {
         switch (op) {
             case help_op: break;
             case license_op: break;
             case version_op: break;
+            case default_op: break;
         }
     }
 
@@ -224,10 +210,31 @@ namespace Parser {
             case verbose_op: break;
             case recompress_op: break;
             case decompress_op: break;
+            case default_op: break;
         }
     }
 
+
+}
+
+namespace Parser {
+    void handleNotOption(const std::span<const char> token, std::span<char> fileName, std::size_t &threadCount) {
+        if (isNumber(token)) {
+            if (last_project != job_op) {
+                perror("Last option was not -T");
+                return;
+            }
+            threadCount = stoull(std::string(token.begin(), token.end()));
+        } else if (isValidFile(token)) {
+            std::copy(token.begin(), token.end(), fileName.begin());
+        } else {
+            perror("File name given was not valid");
+        }
+    }
+
+
     void handleArg(const std::span<const char> token, std::span<char> fileName, std::span<std::size_t> values) {
+
 
     }
 
