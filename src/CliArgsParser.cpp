@@ -119,21 +119,22 @@ namespace {
         return std::filesystem::exists(filePath);
     }
 
-   //cli_op_codes last_op;  // used later
+   cli_op_codes last_op;
 }
 
 namespace Parser {
 
     void handleNotOption(const std::span<const char> token, std::span<char> fileName, std::size_t &threadCount) {
         if (isNumber(token)) {
-            perror("multi threads not implemented yet!");
-            return;
-        } else {
-            if (!isValidFile(token)) {
-                perror("File name given was not valid");
+            if (last_op != job_op) {
+                perror("Last option was not -T");
                 return;
             }
+            threadCount = stoull(std::string(token.begin(), token.end()));
+        } else if (isValidFile(token)) {
             std::copy(token.begin(), token.end(), fileName.begin());
+        } else {
+            perror("File name given was not valid");
         }
     }
 
@@ -148,8 +149,7 @@ namespace Parser {
         return index;
     }
 
-    void handle_arg() {
-        cli_op_codes op = level_0;
+    void handle_arg(cli_op_codes op) {
         switch (op) {
             case level_0: break;
             case level_1: break;
@@ -168,5 +168,14 @@ namespace Parser {
             case verbose_op: break;
             case decompress_op: break;
         }
+    }
+
+    void handleArg(const std::span<const char> token, std::span<char> fileName, std::span<std::size_t> values) {
+        std::size_t isOption(token)
+
+    }
+
+    void handleArgs() {
+
     }
 }
