@@ -5,14 +5,14 @@ namespace {
 
     void setJumpsForPrime(std::uint64_t prime) {
         for (std::size_t coPrime = prime, i = 0; i < 8; i++) {
-            jump_lookup[i] = fastDivideBy30(coPrime);
+            jump_lookup[i] = FastMath::fastDivideBy30(coPrime);
             coPrime += (prime * ProjectConstants::jumps[i]);
         }
     }
 }
 
 namespace pending {
-    void sievePrime(std::span<std::uint8_t segment, std::uint64_t prime) {
+    void sievePrime(std::span<std::uint8_t> segment, std::uint64_t prime) {
         setJumpsForPrime(prime);
         for (std::size_t i = 0; i < segment.size(); i += prime) {
             auto j = 0;

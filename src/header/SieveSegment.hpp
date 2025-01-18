@@ -3,7 +3,7 @@
 
 #include "ContainerIncludes.hpp"
 #include "FastMath.hpp"
-#include "IntegralTypesIncludes.hpp"
+#include "IntegralTypeIncludes.hpp"
 #include "ProjectConstants.hpp"
 
 namespace SieveSegment {

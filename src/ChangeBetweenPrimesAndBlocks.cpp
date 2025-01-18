@@ -1,4 +1,4 @@
-#include "headers/ChangeBetweenPrimesAndBlocks.hpp"
+#include "header/ChangeBetweenPrimesAndBlocks.hpp"
 
 namespace EndpointConversion {
     /**
@@ -30,7 +30,7 @@ namespace EndpointConversion {
         std::size_t blockSize = fastDivideBy30(primes_in.back()) - fastDivideBy30(primes_in.front());
         primes_out.assign(blockSize, 0);
         for(const auto& prime: primes_in)
-            primes_out[fastDivideBy30(prime) % blockSize] |= ProjectConstants::offset_to_mask[fastModBy30(prime)];
+            primes_out[FastMath::fastDivideBy30(prime) % blockSize] |= ProjectConstants::offset_to_mask[FastMath::fastModBy30(prime)];
     }
 
     /**

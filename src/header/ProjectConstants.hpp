@@ -2,11 +2,31 @@
 #define PROJECT_CONSTANTS_HPP
 
 #include "ContainerIncludes.hpp"
-#include "IntegralTypesIncludes.hpp"
+#include "IntegralTypeIncludes.hpp"
 
 namespace ProjectConstants {
-    constexpr std::uint64_t phi_values[9] = {};
-    constexpr std::uint64_t primorial_values[9] = {};
+    constexpr std::uint64_t phi_values[9] = {
+        8u,
+        8u,
+        8u,
+        8u,
+        8u,
+        8u,
+        8u,
+        8u,
+        8u
+    };
+    constexpr std::uint64_t primorial_values[9] = {
+        30u,
+        30u,
+        30u,
+        30u,
+        30u,
+        30u,
+        30u,
+        30u,
+        30u
+    };
 
     constexpr std::size_t bits_per_mask = 8;
     constexpr std::size_t rb5_index = 1;
