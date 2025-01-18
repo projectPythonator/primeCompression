@@ -43,7 +43,7 @@ namespace {
         decompress_op
     };
 
-    constexpr std::array<std::string_view, 31> cli_project_options = {
+    constexpr std::array<std::string_view, 30> cli_project_options = {
         "-0",
         "--fast",
         "-1",
@@ -56,35 +56,27 @@ namespace {
         "-8",
         "-9",
         "--best",
-
         "-b",
         "--binary",
-        
         "-j",
         "--jobs",
-
         "-t",
         "--test",
-
         "-f",
         "--force",
-
         "-c",
         "--stdout",
         "--to-stdout",
-
         "-v",
         "--verbose"
-
         "-R",
         "--recompress",
-
         "-d",
         "--decompress",
         "--uncompress",
     };
 
-    constexpr std::array<cli_project_switches, 31> cli_project_codes = {
+    constexpr std::array<cli_project_switches, 30> cli_project_codes = {
         level_0,
         level_1,
         level_1,
@@ -180,6 +172,7 @@ namespace {
         return (projectIndex(token) < cli_project_options.size());
     }
 
+
     bool isNumber(const std::span<const char> token) {
         return std::all_of(token.begin(), token.end(), [](auto &el) { return std::isdigit(el); } );
     }
@@ -206,18 +199,6 @@ namespace Parser {
         }
     }
 
-    /*
-    std::size_t isOption(std::span<const char> token) {
-        std::basic_string_view token_view(token.data(), token.size());
-        std::size_t index = 0;
-        for (const auto &option: cli_options_values) {
-            if (token_view == option) 
-                break;
-            index++;
-        }
-        return index;
-    }
-    */
     void handleStaticSwitches(cli_static_switches op) {
         switch (op) {
             case help_op: break;
@@ -226,8 +207,7 @@ namespace Parser {
         }
     }
 
-    void handleProgramSwitches() {
-        cli_project_switches op = level_0;
+    void handleProjectSwitches(cli_project_switches op) {
         switch (op) {
             case level_0: break;
             case level_1: break;
@@ -262,5 +242,17 @@ namespace Parser {
             }
             i++;
         }
+
+        i = 0;
+        for (std::string_view arg: std::span(argv, argc)) {
+            if (i == 0)
+                continue;
+            if (isProjectSwitch(arg)) {
+                handleProjectSwitches(cli_project_codes[projectIndex(arg)]);
+                return;
+            }
+            i++;
+        }
+
     }
 }
