@@ -4,7 +4,7 @@
 #include "IntegralTypeIncludes.hpp"
 
 namespace ProjectConstantsOnceSet {
-    std::size_t thread_count;
+    inline std::size_t thread_count;
 }
 
 

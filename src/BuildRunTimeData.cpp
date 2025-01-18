@@ -24,13 +24,13 @@ namespace InitData {
         returnMemory(tmpVec);
     }
 
-    void initForPrimesToBlocks(const std::span<const char> inName, const std::span<const char> outName) {
+    void initForPrimesToBlocks(const std::span<char> inName, const std::span<char> outName) {
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputText);
         ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);
     }
 
     void initForBlocksToBlocksHigher(
-            const std::span<const char> inName , const std::span<const char> outName, std::size_t newLevel) {
+            const std::span<char> inName , const std::span<char> outName, std::size_t newLevel) {
 
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputBinary);
         ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);
@@ -38,25 +38,25 @@ namespace InitData {
     }
 
     void initForBlocksToBlocksLower(
-            const std::span<const char> inName , const std::span<const char> outName, std::size_t newLevel) {
+            const std::span<char> inName , const std::span<char> outName, std::size_t newLevel) {
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputBinary);
         ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);
         prepLevelChange(false, newLevel);
     }
 
-    void initForPrimesToBlocks(const std::span<const char> inName , const std::span<const char> outName) {
+    void initForBlocksToPrimes(const std::span<char> inName , const std::span<char> outName) {
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputBinary);
         ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputText);
     }
 
     void initProgramData(
-            const std::span<const char> inName , const std::span<const char> outName, 
-            std::size_t level, std::size_t threads, std::size_t option) {
+            const std::span<char> inName , const std::span<char> outName, 
+            std::size_t level, std::size_t option) {
         switch (option) {
-            case 0: initForPrimesToBlocks(inName, outName); break;
-            case 1: initForBlocksToBlocksHigher(inName, outName); break;
-            case 2: initForBlocksToBlocksLower(inName, outName); break;
-            case 3: initForPrimesToBlocks(inName, outName); break;
+            case 0u: initForPrimesToBlocks(inName, outName); break;
+            case 1u: initForBlocksToBlocksHigher(inName, outName, level); break;
+            case 2u: initForBlocksToBlocksLower(inName, outName, level); break;
+            case 3u: initForBlocksToPrimes(inName, outName); break;
             default: perror("option not found");
         }
     }

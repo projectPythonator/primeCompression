@@ -134,11 +134,11 @@ namespace {
         cli_static_switches::license_op,
         cli_static_switches::license_op,
         cli_static_switches::version_op,
-        vcli_static_switches::ersion_op
+        cli_static_switches::version_op
     };
 
     cli_static_switches last_static = cli_static_switches::default_op;
-    cli_project_switches last_project = cli_static_switches::default_op;
+    cli_project_switches last_project = cli_project_switches::default_op;
 
     std::size_t staticIndex(const std::span<const char> token) {
         std::basic_string_view token_view(token.data(), token.size());
@@ -220,7 +220,7 @@ namespace {
 namespace Parser {
     void handleNotOption(const std::span<const char> token, std::span<char> fileName, std::size_t &threadCount) {
         if (isNumber(token)) {
-            if (last_project != job_op) {
+            if (last_project != cli_project_switches::job_op) {
                 perror("Last option was not -T");
                 return;
             }
@@ -233,10 +233,12 @@ namespace Parser {
     }
 
 
+    /*
     void handleArg(const std::span<const char> token, std::span<char> fileName, std::span<std::size_t> values) {
 
 
     }
+    */
 
     void handleArgs(int argc, char *argv[], std::span<char> fileName, std::span<std::size_t> values) {
         std::size_t i = 0;
@@ -257,6 +259,10 @@ namespace Parser {
             if (isProjectSwitch(arg)) {
                 handleProjectSwitches(cli_project_codes[projectIndex(arg)]);
                 return;
+            } else {
+                fileName[0] = 'a';
+                values[0] = 0u;
+
             }
             i++;
         }

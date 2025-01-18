@@ -17,11 +17,11 @@ namespace FastMath {
     constexpr __uint128_t INVERSE_DIV_30_LITERAL = 9838263505978427528ULL; 
     constexpr __uint128_t INVERSE_MOD_30_LITERAL = 9838263505978427529ULL; 
 
-    std::uint64_t fastDivideBy30(uint64_t n) {
+    inline std::uint64_t fastDivideBy30(uint64_t n) {
         return (n * INVERSE_DIV_30_LITERAL) >> NORMALIZE_SHIFT;
     }
 
-    std::uint64_t fastModBy30(uint64_t n) {
+    inline std::uint64_t fastModBy30(uint64_t n) {
         return n - ((n * INVERSE_MOD_30_LITERAL) >> NORMALIZE_SHIFT) * NORMALIZE_MUL;
     }
 
