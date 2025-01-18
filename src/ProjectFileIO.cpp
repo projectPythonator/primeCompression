@@ -34,7 +34,7 @@ namespace {
 }
 
 
-namespace projectIO {
+namespace ProjectIO {
     void setOurBufSize(FILE *fileStream) {
         if (std::setvbuf(fileStream, nullptr, _IOFBF, kibi_byte * page_factor))
             std::perror("failed to resize OUT stream size\n");

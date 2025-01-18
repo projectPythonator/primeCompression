@@ -25,27 +25,27 @@ namespace InitData {
     }
 
     void initForPrimesToBlocks(const char *inName, const char *outName) {
-        FileIO::openInStreamInTextAndSetBufSize(inName);
-        FileIO::openOutStreamInBinaryAndSetBufSize(outName);
+        ProjectIO::openInStreamInTextAndSetBufSize(inName);
+        ProjectIO::openOutStreamInBinaryAndSetBufSize(outName);
     }
 
     void initForBlocksToBlocksHigher(
             const char *inName , const char *outName, std::size_t newLevel) {
-        FileIO::openInStreamInBinaryAndSetBufSize(inName);
-        FileIO::openOutStreamInBinaryAndSetBufSize(outName);
+        ProjectIO::openInStreamInBinaryAndSetBufSize(inName);
+        ProjectIO::openOutStreamInBinaryAndSetBufSize(outName);
         prepLevelChange(true, newLevel);
     }
 
     void initForBlocksToBlocksLower(
             const char *inName , const char *outName, std::size_t newLevel) {
-        FileIO::openInStreamInBinaryAndSetBufSize(inName);
-        FileIO::openOutStreamInBinaryAndSetBufSize(outName);
+        ProjectIO::openInStreamInBinaryAndSetBufSize(inName);
+        ProjectIO::openOutStreamInBinaryAndSetBufSize(outName);
         prepLevelChange(false, newLevel);
     }
 
     void initForPrimesToBlocks(const char *inName, const char *outName) {
-        FileIO::openInStreamInBinaryAndSetBufSize(inName);
-        FileIO::openOutStreamInTextAndSetBufSize(outName);
+        ProjectIO::openInStreamInBinaryAndSetBufSize(inName);
+        ProjectIO::openOutStreamInTextAndSetBufSize(outName);
     }
 
     void initProgramData(

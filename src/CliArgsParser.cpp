@@ -25,7 +25,7 @@ namespace {
     };
     */
 
-    enum cli_project_switches {
+    enum class cli_project_switches {
         level_0,
         level_1,
         level_2,
@@ -112,7 +112,7 @@ namespace {
 
     // these codes print info then force exit the prog
     // first one seen is used
-    enum cli_static_switches {
+    enum class cli_static_switches {
         help_op,
         license_op,
         version_op,
@@ -186,31 +186,31 @@ namespace {
 
     void handleStaticSwitches(cli_static_switches op) {
         switch (op) {
-            case help_op: break;
-            case license_op: break;
-            case version_op: break;
-            case default_op: break;
+            case cli_static_switches::help_op: break;
+            case cli_static_switches::license_op: break;
+            case cli_static_switches::version_op: break;
+            case cli_static_switches::default_op: break;
         }
     }
 
     void handleProjectSwitches(cli_project_switches op) {
         switch (op) {
-            case level_0: break;
-            case level_1: break;
-            case level_2: break;
-            case level_3: break;
-            case level_4: break;
-            case level_5: break;
-            case level_6: break;
-            case bin_op: break;
-            case job_op: break;
-            case test_op: break;
-            case force_op: break;
-            case stdout_op: break;
-            case verbose_op: break;
-            case recompress_op: break;
-            case decompress_op: break;
-            case default_op: break;
+            case cli_project_switches::level_0: break;
+            case cli_project_switches::level_1: break;
+            case cli_project_switches::level_2: break;
+            case cli_project_switches::level_3: break;
+            case cli_project_switches::level_4: break;
+            case cli_project_switches::level_5: break;
+            case cli_project_switches::level_6: break;
+            case cli_project_switches::bin_op: break;
+            case cli_project_switches::job_op: break;
+            case cli_project_switches::test_op: break;
+            case cli_project_switches::force_op: break;
+            case cli_project_switches::stdout_op: break;
+            case cli_project_switches::verbose_op: break;
+            case cli_project_switches::recompress_op: break;
+            case cli_project_switches::decompress_op: break;
+            case cli_project_switches::default_op: break;
         }
     }
 
