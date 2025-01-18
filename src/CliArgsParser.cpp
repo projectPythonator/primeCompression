@@ -143,6 +143,43 @@ namespace {
         version_op
     };
 
+    cli_static_switches last_static;
+    cli_project_switches last_project;
+
+    std::size_t staticIndex(const std::span<const char> token) {
+        std::basic_string_view token_view(token.data(), token.size());
+        std::size_t i = 0;
+        for (const auto &option: cli_static_options) {
+            if (token_view == option)  {
+                last_static = cli_static_codes[i];
+                return i;
+            }
+            i++;
+        }
+        return i;
+    }
+
+    bool isStaticSwitch(const std::span<const char> token) {
+        return (staticIndex(token) < cli_static_options.size());
+    }
+
+    std::size_t projectIndex(const std::span<const char> token) {
+        std::basic_string_view token_view(token.data(), token.size());
+        std::size_t i = 0;
+        for (const auto &option: cli_project_options) {
+            if (token_view == option)  {
+                last_project = cli_project_codes[i];
+                return i;
+            }
+            i++;
+        }
+        return i;
+    }
+
+    bool isProjectSwitch(const std::span<const char> token) {
+        return (projectIndex(token) < cli_project_options.size());
+    }
+
     bool isNumber(const std::span<const char> token) {
         return std::all_of(token.begin(), token.end(), [](auto &el) { return std::isdigit(el); } );
     }
@@ -152,8 +189,6 @@ namespace {
         return std::filesystem::exists(filePath);
     }
 
-   cli_static_switches last_static;
-   cli_project_switches last_project;
 }
 
 namespace Parser {
@@ -171,19 +206,7 @@ namespace Parser {
         }
     }
 
-    bool isStaticExist(const std::span<const char> token) {
-        std::basic_string_view token_view(token.data(), token.size());
-        std::size_t i = 0;
-        for (const auto &option: cli_static_options) {
-            if (token_view == option)  {
-                last_static = cli_static_codes[i];
-                return true;
-            }
-            i++;
-        }
-        return false;
-    }
-/*
+    /*
     std::size_t isOption(std::span<const char> token) {
         std::basic_string_view token_view(token.data(), token.size());
         std::size_t index = 0;
@@ -194,10 +217,8 @@ namespace Parser {
         }
         return index;
     }
-
     */
-    void handleStaticSwitches() {
-        cli_static_switches op = help_op;
+    void handleStaticSwitches(cli_static_switches op) {
         switch (op) {
             case help_op: break;
             case license_op: break;
@@ -230,7 +251,16 @@ namespace Parser {
 
     }
 
-    void handleArgs() {
-
+    void handleArgs(int argc, char *argv[], std::span<char> fileName, std::span<std::size_t> values) {
+        std::size_t i = 0;
+        for (std::string_view arg: std::span(argv, argc)) {
+            if (i == 0)
+                continue;
+            if (isStaticSwitch(arg)) {
+                handleStaticSwitches(cli_static_codes[staticIndex(arg)]);
+                return;
+            }
+            i++;
+        }
     }
 }
