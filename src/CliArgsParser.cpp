@@ -25,7 +25,7 @@ namespace {
     };
     */
 
-    enum cli_op_codes {
+    enum cli_project_switches {
         level_0,
         level_1,
         level_2,
@@ -33,24 +33,17 @@ namespace {
         level_4,
         level_5,
         level_6,
+        bin_op,
         job_op,
         test_op,
         force_op,
         stdout_op,
         verbose_op,
+        recompress_op,
         decompress_op
     };
 
-    // these codes print info then force exit the prog
-    // first one seen is used
-    enum cli_static_switches {
-        help_op,
-        license_op,
-        version_op,
-    };
-
-
-    constexpr std::array<std::string_view, 32> cli_options_values = {
+    constexpr std::array<std::string_view, 31> cli_project_options = {
         "-0",
         "--fast",
         "-1",
@@ -63,38 +56,35 @@ namespace {
         "-8",
         "-9",
         "--best",
+
+        "-b",
+        "--binary",
         
-        "-h",
-        "--help",
-
-        "-f",
-        "--force",
-
         "-j",
         "--jobs",
 
         "-t",
         "--test",
 
+        "-f",
+        "--force",
+
         "-c",
         "--stdout",
         "--to-stdout",
 
-        "-L",
-        "--license",
+        "-v",
+        "--verbose"
 
-        "-V",
-        "--version",
+        "-R",
+        "--recompress",
 
         "-d",
         "--decompress",
         "--uncompress",
-
-        "-v",
-        "--verbose"
     };
 
-    constexpr std::array<cli_op_codes, 32> cli_options_codes = {
+    constexpr std::array<cli_project_switches, 31> cli_project_codes = {
         level_0,
         level_1,
         level_1,
@@ -107,36 +97,52 @@ namespace {
         level_6,
         level_6,
         level_6,
-        
-        help_op,
-        help_op,
-
-        force_op,
-        force_op,
-
+        bin_op,
+        bin_op,
         job_op,
         job_op,
-
         test_op,
         test_op,
-
+        force_op,
+        force_op,
         stdout_op,
         stdout_op,
         stdout_op,
-
-        license_op,
-        license_op,
-
-        version_op,
-        version_op,
-
-        decompress_op,
-        decompress_op,
-        decompress_op,
-
         verbose_op,
-        verbose_op
+        verbose_op,
+        recompress_op,
+        recompress_op,
+        decompress_op,
+        decompress_op,
+        decompress_op
     };
+
+    // these codes print info then force exit the prog
+    // first one seen is used
+    enum cli_static_switches {
+        help_op,
+        license_op,
+        version_op,
+    };
+
+    constexpr std::array<std::string_view, 6> cli_static_options = {
+        "-h",
+        "--help",
+        "-L",
+        "--license",
+        "-V",
+        "--version"
+    };
+
+    constexpr std::array<cli_static_switches, 6> cli_static_codes = {
+        help_op,
+        help_op,
+        license_op,
+        license_op,
+        version_op,
+        version_op
+    };
+
     bool isNumber(const std::span<const char> token) {
         return std::all_of(token.begin(), token.end(), [](auto &el) { return std::isdigit(el); } );
     }
@@ -146,14 +152,14 @@ namespace {
         return std::filesystem::exists(filePath);
     }
 
-   cli_op_codes last_op;
+   cli_static_switches last_static;
+   cli_project_switches last_project;
 }
 
 namespace Parser {
-
     void handleNotOption(const std::span<const char> token, std::span<char> fileName, std::size_t &threadCount) {
         if (isNumber(token)) {
-            if (last_op != job_op) {
+            if (last_project != job_op) {
                 perror("Last option was not -T");
                 return;
             }
@@ -165,6 +171,19 @@ namespace Parser {
         }
     }
 
+    bool isStaticExist(const std::span<const char> token) {
+        std::basic_string_view token_view(token.data(), token.size());
+        std::size_t i = 0;
+        for (const auto &option: cli_static_options) {
+            if (token_view == option)  {
+                last_static = cli_static_codes[i];
+                return true;
+            }
+            i++;
+        }
+        return false;
+    }
+/*
     std::size_t isOption(std::span<const char> token) {
         std::basic_string_view token_view(token.data(), token.size());
         std::size_t index = 0;
@@ -176,8 +195,18 @@ namespace Parser {
         return index;
     }
 
-    void handle_arg() {
-        cli_op_codes op = level_0;
+    */
+    void handleStaticSwitches() {
+        cli_static_switches op = help_op;
+        switch (op) {
+            case help_op: break;
+            case license_op: break;
+            case version_op: break;
+        }
+    }
+
+    void handleProgramSwitches() {
+        cli_project_switches op = level_0;
         switch (op) {
             case level_0: break;
             case level_1: break;
@@ -186,14 +215,13 @@ namespace Parser {
             case level_4: break;
             case level_5: break;
             case level_6: break;
+            case bin_op: break;
             case job_op: break;
-            case help_op: break;
             case test_op: break;
             case force_op: break;
             case stdout_op: break;
-            case license_op: break;
-            case version_op: break;
             case verbose_op: break;
+            case recompress_op: break;
             case decompress_op: break;
         }
     }
