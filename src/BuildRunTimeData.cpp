@@ -24,20 +24,20 @@ namespace InitData {
         returnMemory(tmpVec);
     }
 
-    void initForPrimesToBlocks(const char *inName, const char *outName) {
-        ProjectIO::openInStreamInTextAndSetBufSize(inName);
-        ProjectIO::openOutStreamInBinaryAndSetBufSize(outName);
+    void initForPrimesToBlocks(const std::span<const char> inName, const std::span<const char> outName) {
+        ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputText);
+        ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);
     }
 
     void initForBlocksToBlocksHigher(
-            const char *inName , const char *outName, std::size_t newLevel) {
+            const std::span<const char> inName , const std::span<const char> outName, std::size_t newLevel) {
         ProjectIO::openInStreamInBinaryAndSetBufSize(inName);
         ProjectIO::openOutStreamInBinaryAndSetBufSize(outName);
         prepLevelChange(true, newLevel);
     }
 
     void initForBlocksToBlocksLower(
-            const char *inName , const char *outName, std::size_t newLevel) {
+            const std::span<const char> inName , const std::span<const char> outName, std::size_t newLevel) {
         ProjectIO::openInStreamInBinaryAndSetBufSize(inName);
         ProjectIO::openOutStreamInBinaryAndSetBufSize(outName);
         prepLevelChange(false, newLevel);

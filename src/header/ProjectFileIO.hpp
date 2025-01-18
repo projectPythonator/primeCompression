@@ -7,7 +7,7 @@
 #include <cinttypes> // for fixed width scan and print types
 
 // TODO fix typing am going to migrate to using fstream idk how good or bad it will be
-namespace projectIO {
+namespace ProjectIO {
     inline bool eof_not_read = true;
     enum FileModeCode {
         inputText,

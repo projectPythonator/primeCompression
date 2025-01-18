@@ -77,21 +77,21 @@ namespace ProjectIO {
             chr = fgetc_unlocked(file_in_stream);
         }
         buf[bytesRead] = unsigned_new_line;
-        eof_not_read = (chr != EOF);
+        ProjectIO::eof_not_read = (chr != EOF);
         return bytesRead;
     }
 
     std::size_t readBlock_1Byte(const std::span<std::uint8_t> buf) {
         //std::size_t bytesRead = fread_unlocked(buf.data(), 1u, buf.size(), file_in_stream);
         std::size_t bytesRead = std::fread(buf.data(), 1u, buf.size(), file_in_stream);
-        eof_not_read = (0 == std::feof(file_in_stream));
+        ProjectIO::eof_not_read = (0 == std::feof(file_in_stream));
         return bytesRead;
     }
 
     std::size_t readBlock_8Byte(const std::span<std::uint64_t> buf) {
         //std::size_t bytesread = fread_unlocked(buf.data(), 8u, buf.size(), file_in_stream);
         std::size_t bytesread = std::fread(buf.data(), 8u, buf.size(), file_in_stream);
-        eof_not_read = (0 == std::feof(file_in_stream));
+        ProjectIO::eof_not_read = (0 == std::feof(file_in_stream));
         return bytesread;
     }
 
@@ -139,7 +139,7 @@ namespace ProjectIO {
     std::size_t readBlockTillNL(const std::span<std::uint8_t> buf) {
         assert(buf.size() == text_block_size);
         std::size_t bytesRead = readBlock_1Byte(buf.subspan(0, buf.size() - max_20_digit));
-        if (eof_not_read && buf[bytesRead-1] != '\n') 
+        if (ProjectIO::eof_not_read && buf[bytesRead-1] != '\n') 
             bytesRead += readTillNL(buf.subspan(buf.size() - max_20_digit, buf.size()));
         remove_zero_factor(buf);
         return bytesRead;
