@@ -31,25 +31,26 @@ namespace InitData {
 
     void initForBlocksToBlocksHigher(
             const std::span<const char> inName , const std::span<const char> outName, std::size_t newLevel) {
-        ProjectIO::openInStreamInBinaryAndSetBufSize(inName);
-        ProjectIO::openOutStreamInBinaryAndSetBufSize(outName);
+
+        ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputBinary);
+        ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);
         prepLevelChange(true, newLevel);
     }
 
     void initForBlocksToBlocksLower(
             const std::span<const char> inName , const std::span<const char> outName, std::size_t newLevel) {
-        ProjectIO::openInStreamInBinaryAndSetBufSize(inName);
-        ProjectIO::openOutStreamInBinaryAndSetBufSize(outName);
+        ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputBinary);
+        ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);
         prepLevelChange(false, newLevel);
     }
 
-    void initForPrimesToBlocks(const char *inName, const char *outName) {
-        ProjectIO::openInStreamInBinaryAndSetBufSize(inName);
-        ProjectIO::openOutStreamInTextAndSetBufSize(outName);
+    void initForPrimesToBlocks(const std::span<const char> inName , const std::span<const char> outName) {
+        ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputBinary);
+        ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputText);
     }
 
     void initProgramData(
-            const char *inName, const char *outName, 
+            const std::span<const char> inName , const std::span<const char> outName, 
             std::size_t level, std::size_t threads, std::size_t option) {
         switch (option) {
             case 0: initForPrimesToBlocks(inName, outName); break;

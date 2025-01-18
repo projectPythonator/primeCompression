@@ -78,36 +78,36 @@ namespace {
     };
 
     constexpr std::array<cli_project_switches, 30> cli_project_codes = {
-        level_0,
-        level_1,
-        level_1,
-        level_2,
-        level_3,
-        level_4,
-        level_5,
-        level_6,
-        level_6,
-        level_6,
-        level_6,
-        level_6,
-        bin_op,
-        bin_op,
-        job_op,
-        job_op,
-        test_op,
-        test_op,
-        force_op,
-        force_op,
-        stdout_op,
-        stdout_op,
-        stdout_op,
-        verbose_op,
-        verbose_op,
-        recompress_op,
-        recompress_op,
-        decompress_op,
-        decompress_op,
-        decompress_op
+        cli_project_switches::level_0,
+        cli_project_switches::level_1,
+        cli_project_switches::level_1,
+        cli_project_switches::level_2,
+        cli_project_switches::level_3,
+        cli_project_switches::level_4,
+        cli_project_switches::level_5,
+        cli_project_switches::level_6,
+        cli_project_switches::level_6,
+        cli_project_switches::level_6,
+        cli_project_switches::level_6,
+        cli_project_switches::level_6,
+        cli_project_switches::bin_op,
+        cli_project_switches::bin_op,
+        cli_project_switches::job_op,
+        cli_project_switches::job_op,
+        cli_project_switches::test_op,
+        cli_project_switches::test_op,
+        cli_project_switches::force_op,
+        cli_project_switches::force_op,
+        cli_project_switches::stdout_op,
+        cli_project_switches::stdout_op,
+        cli_project_switches::stdout_op,
+        cli_project_switches::verbose_op,
+        cli_project_switches::verbose_op,
+        cli_project_switches::recompress_op,
+        cli_project_switches::recompress_op,
+        cli_project_switches::decompress_op,
+        cli_project_switches::decompress_op,
+        cli_project_switches::decompress_op
     };
 
     // these codes print info then force exit the prog
@@ -129,12 +129,12 @@ namespace {
     };
 
     constexpr std::array<cli_static_switches, 6> cli_static_codes = {
-        help_op,
-        help_op,
-        license_op,
-        license_op,
-        version_op,
-        version_op,
+        cli_static_switches::help_op,
+        cli_static_switches::help_op,
+        cli_static_switches::license_op,
+        cli_static_switches::license_op,
+        cli_static_switches::version_op,
+        vcli_static_switches::ersion_op
     };
 
     cli_static_switches last_static = cli_static_switches::default_op;
