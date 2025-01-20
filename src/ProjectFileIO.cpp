@@ -33,6 +33,14 @@ namespace {
         std::for_each(buf.begin(), buf.end(), [](std::uint8_t &el) { el += unsigned_zero; });
     }
     
+    void writeBlock_1Byte(const std::span<const std::uint8_t> buf) {
+        std::fwrite(buf.data(), 1u, buf.size(), file_out_stream);
+    }
+
+    void writeBlock_8Byte(const std::span<const std::uint64_t> buf) {
+        std::fwrite(buf.data(), 8u, buf.size(), file_out_stream);
+    }
+
     void setOurBufSize(FILE *fileStream) {
         if (std::setvbuf(fileStream, nullptr, _IOFBF, kibi_byte * page_factor))
             std::perror("failed to resize OUT stream size\n");
@@ -59,19 +67,15 @@ namespace {
 }
 
 
-
+// TODO add function to call 8byte write
 namespace ProjectIO {
-    void writeBlock_1Byte(const std::span<const std::uint8_t> buf) {
-        std::fwrite(buf.data(), 1u, buf.size(), file_out_stream);
-    }
-
-    void writeBlock_8Byte(const std::span<const std::uint64_t> buf) {
-        std::fwrite(buf.data(), 8u, buf.size(), file_out_stream);
-    }
-
     void writeBlockOfText(const std::span<std::uint8_t> buf) {
         add_zero_factor(buf);
         writeBlock_1Byte(buf);
+    }
+
+    void writeBlockOfBinary(const std::span<std::uint64_t> buf) {
+        writeBlock_8Byte(buf);
     }
 
     void flushBuffer(const std::span<const std::uint8_t> buf) {

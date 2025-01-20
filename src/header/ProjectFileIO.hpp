@@ -16,10 +16,10 @@ namespace ProjectIO {
         outputBinary
     };
 
-    void writeBlock_1Byte(const std::span<const std::uint8_t>);
-    void writeBlock_8Byte(const std::span<const std::uint64_t>);
 
     void writeBlockOfText(const std::span<std::uint8_t>);
+    void writeBlockOfBinary(const std::span<std::uint64_t>);
+
     void flushBuffer(const std::span<const std::uint8_t>);
 
     std::size_t readTillNL(const std::span<std::uint8_t>);
