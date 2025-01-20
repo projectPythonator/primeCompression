@@ -38,7 +38,11 @@ namespace {
 }
 
 namespace EndPointConversions {
-
+    /**
+     * @brief See below for more info
+     *
+     * @optimizatiion   applies unroll and size based optimization not even sure if it fully is better
+     */
     std::uint64_t getNextNumberBase10_XXd(std::span<const std::uint8_t> number) {
         // can probably change these into function pointers maybe
         assert(number.size() < max_20_digit); 
@@ -50,6 +54,16 @@ namespace EndPointConversions {
         }
     }
 
+    /**
+     * @brief Grabs next number from a char buffer
+     * Using this method we can quickly grab a long long from a buffer with or without multithreading
+     *
+     * @param number    the span holding a number in base 10 ascii form
+     * @return          uint64_t number from the given string
+     *
+     * @optimizatiion_1 maybe unroll the loop if possible
+     * @assumption      strings will not be checked for 0-9 assumes correct input will probably crash if happens
+     */
     std::uint64_t getNextNumberBase10(std::span<const std::uint8_t> number) {
         std::uint64_t result = 0;
         #pragma GCC unroll 8 // need to add in clang and mvvc
@@ -58,6 +72,21 @@ namespace EndPointConversions {
         return result;
     }
 
+    /**
+     * @brief convert block of text to numbers
+     * Using a formatted proper block of text we convert them to numbers 
+     *
+     * @param numbers   buffer of text representing the list of numbers
+     * @param lengths   lengths of each of the numbers
+     * @param primes    a place to sotre the converted prime numbers
+     *
+     * @optimizatiion_1 have multiple threads work on section at once 
+     * @optimizatiion_2 change legnths to be length_x, start, end type of thing
+     *
+     * @assumption_1    numbers are base 10
+     * @assumption_2    text only has newlines and digit chars
+     * @assumption_3    starts with number and ends with '\n'
+     */
     void convertTextBlock(
             std::span<const std::uint8_t> numbers, 
             std::span<const std::size_t> lengths, 
