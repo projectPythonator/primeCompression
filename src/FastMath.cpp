@@ -45,7 +45,16 @@ namespace {
 }
 
 namespace FastMath {
-   
+
+     /**
+     * @brief combine meta data into one hash
+     * Using Boost style hash combine and a hash function I found combine metaData into a hash
+     *
+     * @param metaData  a span representing the medta data of my program, segmented primorial, first and last prime and number of 0s
+     * @param hashes    a span to hold 4 spots for creating checksums
+     *
+     * @optimization_1 use better and bigger hash to avoid collisions
+     */
     void generate_hashes(const std::span<const std::uint64_t> metaData, std::span<std::uint64_t> hashes) {
         assert(metaData.size() == 5u);
         std::array<std::uint64_t, 5u> metaFor{0};
