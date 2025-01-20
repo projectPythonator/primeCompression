@@ -8,7 +8,6 @@
 #include <cmath>
                   
 // TODO does it make more sense
-// TODO use a namespace name or does this even make sense to have it like this
 namespace FastMath {
     // used for normalizing the inverse function
     constexpr uint64_t NORMALIZE_SHIFT = 68ULL;  
