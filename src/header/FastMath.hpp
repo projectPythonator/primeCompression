@@ -25,6 +25,7 @@ namespace FastMath {
     inline std::uint64_t fastModBy30(uint64_t n) {
         return n - ((n * INVERSE_MOD_30_LITERAL) >> NORMALIZE_SHIFT) * NORMALIZE_MUL;
     }
+
     void generate_hashes(const std::span<const std::uint64_t>, std::span<std::uint64_t>);
 }
 
