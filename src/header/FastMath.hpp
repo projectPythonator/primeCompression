@@ -29,12 +29,10 @@ namespace FastMath {
 
     /**
      * @brief combine meta data into one hash
-     * Using Boost style hash combine and a hash function I found combine metaData into a hash
+     * call with the parameters and get 4 checksums after program is done running
      *
-     * @param param_1 a span representing the medta data of my program, segmented primorial, first and last prime and number of 0s
+     * @param param_1 a span representing 5 pieces of metaData in program topHalf, bottomHalf, firstPrime, lastPrime, numberOf0Bits
      * @param param_2 a span to hold 4 spots for creating checksums
-     *
-     * @optimization_1 use better and bigger hash to avoid collisions
      */
     void generate_hashes(const std::span<const std::uint64_t>, std::span<std::uint64_t>);
 }
