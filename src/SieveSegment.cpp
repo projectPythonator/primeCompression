@@ -9,18 +9,18 @@ namespace {
             coPrime += (prime * ProjectConstants::jumps[i]);
         }
     }
-}
 
-namespace SieveSegment {
     void sievePrime(std::span<std::uint8_t> segment, std::uint64_t prime) {
         setJumpsForPrime(prime);
         for (std::size_t i = 0; i < segment.size(); i += prime) {
-            auto j = 0;
-            for (const std::uint8_t mask: ProjectConstants::mask_lookup[prime])
+            std::size_t j = 0;
+            for (const std::uint8_t &mask: ProjectConstants::mask_lookup[prime])
                 segment[i + jump_lookup[j++]] &= mask;
         }
     }
+}
 
+namespace SieveSegment {
     void sieveSegment(std::span<std::uint8_t> segment, std::size_t level) {
         if (level < 2) 
             return;
