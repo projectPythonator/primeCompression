@@ -28,8 +28,6 @@ namespace ProjectIO {
     std::size_t readBlockNBytes(const std::span<std::uint8_t>);
     std::size_t readBlock_8Byte(const std::span<std::uint64_t>); 
 
-    FILE * openStreamInGivenMode(const std::span<const char>, const std::span<const char>, FILE *);
-
     void setFileForProgram(std::span<char>, FileModeCode);
 
     std::size_t readBlockTillNL(const std::span<std::uint8_t>);

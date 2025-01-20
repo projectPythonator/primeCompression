@@ -32,6 +32,7 @@ namespace {
     void add_zero_factor(const std::span<std::uint8_t> buf) {
         std::for_each(buf.begin(), buf.end(), [](std::uint8_t &el) { el += unsigned_zero; });
     }
+    
     void setOurBufSize(FILE *fileStream) {
         if (std::setvbuf(fileStream, nullptr, _IOFBF, kibi_byte * page_factor))
             std::perror("failed to resize OUT stream size\n");
@@ -42,11 +43,24 @@ namespace {
             std::perror("failed to set associated file stream to value\n");
     }
 
+    FILE *openStreamInGivenMode(
+            const std::span<const char> fileName, 
+            const std::span<const char> fileMode, 
+            FILE *stream) {
+        if (0 == std::strncmp(fileName.data(), "stdin\0", 5)) {
+            stream = std::freopen(nullptr, fileMode.data(), stdin);
+        } else if (0 == std::strncmp(fileName.data(), "stdout\0", 6)) {
+            stream = std::freopen(nullptr, fileMode.data(), stdout);
+        } else {
+            stream = std::fopen(fileName.data(), fileMode.data());
+        }
+        return stream;
+    }
 }
 
 
-namespace ProjectIO {
 
+namespace ProjectIO {
     void writeBlock_1Byte(const std::span<const std::uint8_t> buf) {
         std::fwrite(buf.data(), 1u, buf.size(), file_out_stream);
     }
@@ -84,7 +98,6 @@ namespace ProjectIO {
     }
 
     std::size_t readBlock_1Byte(const std::span<std::uint8_t> buf) {
-        //std::size_t bytesRead = fread_unlocked(buf.data(), 1u, buf.size(), file_in_stream);
         std::size_t bytesRead = std::fread(buf.data(), 1u, buf.size(), file_in_stream);
         ProjectIO::eof_not_read = (0 == std::feof(file_in_stream));
         return bytesRead;
@@ -103,16 +116,6 @@ namespace ProjectIO {
         return bytesRead;
     }
 
-    FILE * openStreamInGivenMode(const std::span<const char> fileName, const std::span<const char> fileMode, FILE *stream) {
-        if (0 == std::strncmp(fileName.data(), "stdin\0", 5)) {
-            stream = std::freopen(nullptr, fileMode.data(), stdin);
-        } else if (0 == std::strncmp(fileName.data(), "stdout\0", 6)) {
-            stream = std::freopen(nullptr, fileMode.data(), stdout);
-        } else {
-            stream = std::fopen(fileName.data(), fileMode.data());
-        }
-        return stream;
-    }
 
     void setFileForProgram(std::span<char> fileName, FileModeCode op) {
         assert(fileName.size()  < FILENAME_MAX);
