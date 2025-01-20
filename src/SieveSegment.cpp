@@ -21,6 +21,17 @@ namespace {
 }
 
 namespace SieveSegment {
+
+     /**
+     * @brief build the sieve needed for program 
+     * Using sieving method we make a partial sieve to represent wheel upto the Nth prime after 5
+     *
+     * @param segment   the "sieve" to hold the rb5 based sieving holds bytes the represent our rb5 class to show primes
+     * @param level     the level to which we need to sieve upto its basically the a stop at nth prime type thing 
+     *
+     * @optimizatiion_1 maybe unroll the loop if possible
+     * @bug             we don't check to ensure segment is right size yet need to add assert for that or something
+     */
     void sieveSegment(std::span<std::uint8_t> segment, std::size_t level) {
         if (level < 2) 
             return;
