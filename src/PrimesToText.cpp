@@ -83,6 +83,9 @@ namespace {
 }
 
 namespace EndPointConversions {
+    /**
+     * @brief convert number to string optimized see below
+     */
     void addNextNumberBase10_XXd(std::span<std::uint8_t> number, std::uint64_t n) {
         // can probably change these into function pointers maybe
         assert(number.size() < max_20_digit); 
@@ -94,18 +97,40 @@ namespace EndPointConversions {
         }
     }
 
+    /**
+     * @brief convert number to string
+     *
+     * @param numbers   buffer to store number in
+     * @param n         number to convert 
+     * @return  end index of the buffer
+     *
+     * @optimizatiion_1 unroll size vs let compiler do it
+     *
+     * @assumption_1    no prime is 0
+     */
     void addNextNumberBase10(std::span<std::uint8_t> number, std::uint64_t n) {
         assert(number.size() < max_20_digit); // do I need this? maybe
-        //std::uint8_t buf[max_20_digit] = {0};
         #pragma GCC unroll 4
         for (std::uint8_t &digit: number) {
             digit = n % base;
             n /= base;
         }
-        //std::memcpy(number.data(), buf, number.size());
         std::reverse(number.begin(), number.end());
     }
 
+    /**
+     * @brief convert list of numbers into a buffer
+     * convert list of numbers into base10 ascii char buffer 
+     *
+     * @param primes    a list of primes to convert
+     * @param numbers   buffer to hold the output
+     * @return  end index of the buffer
+     *
+     * @optimizatiion_1 have multiple threads work on section at once 
+     *
+     * @assumption_1    numbers is big enough to hold primes
+     * @assumption_1    no prime is 0
+     */
     std::size_t convertPrimesBlock(std::span<const std::uint64_t> primes, std::span<std::uint8_t> numbers) {
         std::fill(numbers.begin(), numbers.end(), nl_zero);
         std::size_t bufferIndex = 0;
