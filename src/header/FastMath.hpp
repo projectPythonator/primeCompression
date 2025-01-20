@@ -26,17 +26,6 @@ namespace FastMath {
         return n - ((n * INVERSE_MOD_30_LITERAL) >> NORMALIZE_SHIFT) * NORMALIZE_MUL;
     }
     void generate_hashes(const std::span<const std::uint64_t>, std::span<std::uint64_t>);
-  
-
-    /*
-    bool cmpSquares(std::uint64_t m, std::uint16_t n) {
-        return m <= n * n;
-    }
-
-    bool cmpSquares(std::uint64_t m, std::uint32_t n) {
-        return m <= n * n;
-    }
-    */
 }
 
 #endif
