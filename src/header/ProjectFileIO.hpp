@@ -15,9 +15,6 @@ namespace ProjectIO {
         outputText,
         outputBinary
     };
-    
-    void setOurBufSize(FILE *);
-    void checkOpenFile(FILE *);
 
     void writeBlock_1Byte(const std::span<const std::uint8_t>);
     void writeBlock_8Byte(const std::span<const std::uint64_t>);

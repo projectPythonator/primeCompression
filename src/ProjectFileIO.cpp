@@ -15,6 +15,7 @@ namespace {
     constexpr std::size_t text_block_max_numbers = kibi_byte * 4u;
     constexpr std::size_t text_block_size = kibi_byte * page_factor;
 
+    // turn into enum if possible
     constexpr char wb_mode[3] = "wb";
     constexpr char rb_mode[3] = "rb";
     constexpr char wt_mode[3] = "w+";
@@ -31,10 +32,6 @@ namespace {
     void add_zero_factor(const std::span<std::uint8_t> buf) {
         std::for_each(buf.begin(), buf.end(), [](std::uint8_t &el) { el += unsigned_zero; });
     }
-}
-
-
-namespace ProjectIO {
     void setOurBufSize(FILE *fileStream) {
         if (std::setvbuf(fileStream, nullptr, _IOFBF, kibi_byte * page_factor))
             std::perror("failed to resize OUT stream size\n");
@@ -44,6 +41,11 @@ namespace ProjectIO {
         if (nullptr == fileStream) 
             std::perror("failed to set associated file stream to value\n");
     }
+
+}
+
+
+namespace ProjectIO {
 
     void writeBlock_1Byte(const std::span<const std::uint8_t> buf) {
         std::fwrite(buf.data(), 1u, buf.size(), file_out_stream);
