@@ -33,11 +33,11 @@ namespace SieveSegment {
      * @bug             we don't check to ensure segment is right size yet need to add assert for that or something
      */
     void sieveSegment(std::span<std::uint8_t> segment, std::size_t level) {
-        if (level < 2) 
+        if (level < 2) // since are sieving for rb5 to rbX X>5 doesn't make sense to do level 1
             return;
-        std::fill(segment.begin(), segment.end(), 255u);
 
-        for (std::size_t i = 1; i <= level; i++) 
+        std::fill(segment.begin(), segment.end(), 255u);    // all bits turned on initially 
+        for (std::size_t i = 1; i <= level; i++)            // then turn them off in this loop
             sievePrime(segment, ProjectConstants::primes_after_5[i]);
     }
 }
