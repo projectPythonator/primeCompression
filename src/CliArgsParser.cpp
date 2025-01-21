@@ -4,27 +4,6 @@
 // Prog [options] inputFile
 // if inputfile isn't selected the stdin option must be used
 namespace {
-    /*
-    enum cli_op_codes {
-        level_0,
-        level_1,
-        level_2,
-        level_3,
-        level_4,
-        level_5,
-        level_6,
-        job_op,
-        help_op,
-        test_op,
-        force_op,
-        stdout_op,
-        license_op,
-        version_op,
-        verbose_op,
-        decompress_op
-    };
-    */
-
     enum class cli_project_switches {
         level_0,
         level_1,

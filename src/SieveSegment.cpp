@@ -23,7 +23,7 @@ namespace {
 namespace SieveSegment {
 
      /**
-     * @brief build the sieve needed for program 
+     * @brief builds sieve for going to and from higher level compression mapping
      * Using sieving method we make a partial sieve to represent wheel upto the Nth prime after 5
      *
      * @param segment   the "sieve" to hold the rb5 based sieving holds bytes the represent our rb5 class to show primes
