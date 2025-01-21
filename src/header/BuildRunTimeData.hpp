@@ -3,7 +3,8 @@
 
 #include "ContainerIncludes.hpp"
 #include "IntegralTypeIncludes.hpp"
-#include "ChangeCompressionLevel.hpp"
+#include "ChangeLevelHigher.hpp"
+#include "ChangeLevelLower.hpp"
 #include "ProjectFileIO.hpp"
 #include "ProjectConstants.hpp"
 #include "ProjectSemiConstants.hpp"
