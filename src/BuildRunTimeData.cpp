@@ -13,15 +13,22 @@ namespace InitData {
     void prepLevelChange(bool isCompress, std::size_t rbxLevel) {
         std::vector<std::uint8_t> tmpIn;
         std::vector<std::uint8_t> tmpOut;
-        CompressionLevelConversion::adjustResultBufferSize(tmpIn, tmpOut, isCompress, rbxLevel);
+        if (isCompress) {
+            IncreaseLevel::initData(tmpIn, tmpOut, rbxLevel);
+        } else { 
+            DecreaseLevel::initData(tmpIn, tmpOut, rbxLevel);
+        }
         std::size_t adjustedSize = std::max(tmpIn.size(), tmpOut.size());
         returnMemory(tmpIn);
         returnMemory(tmpOut);
         std::vector<std::uint8_t> tmpVec(adjustedSize, 0);
-        CompressionLevelConversion::adjustDATContainers(isCompress, rbxLevel);
-        SieveSegment::sieveSegment(std::span<std::uint8_t>(tmpVec.begin(), tmpVec.size()), rbxLevel);
-        CompressionLevelConversion::fillDATContainers(std::span<std::uint8_t>(tmpVec), isCompress);
-        returnMemory(tmpVec);
+        std::span<std::uint8_t> tmpVecSpan(tmpVec);
+        SieveSegment::sieveSegment(tmpVecSpan, rbxLevel);
+        if (isCompress) {
+            IncreaseLevel::fillDATContainers(tmpVecSpan);
+        } else { 
+            DecreaseLevel::fillDATContainers(tmpVecSpan);
+        }
     }
 
     void initForPrimesToBlocks(const std::span<char> inName, const std::span<char> outName) {
@@ -30,15 +37,18 @@ namespace InitData {
     }
 
     void initForBlocksToBlocksHigher(
-            const std::span<char> inName , const std::span<char> outName, std::size_t newLevel) {
-
+            const std::span<char> inName , 
+            const std::span<char> outName, 
+            std::size_t newLevel) {
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputBinary);
         ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);
         prepLevelChange(true, newLevel);
     }
 
     void initForBlocksToBlocksLower(
-            const std::span<char> inName , const std::span<char> outName, std::size_t newLevel) {
+            const std::span<char> inName , 
+            const std::span<char> outName, 
+            std::size_t newLevel) {
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputBinary);
         ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);
         prepLevelChange(false, newLevel);
