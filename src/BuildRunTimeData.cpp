@@ -28,6 +28,7 @@ namespace {
 }
 
 // TODO Find a place for storing in out buffers or at least the sizes needed
+// TODO Data needs to be ordered before coming into this namespace
 namespace InitData {
     void initForPrimesToBlocks(const std::span<char> inName, const std::span<char> outName) {
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputText);

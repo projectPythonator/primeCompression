@@ -40,8 +40,17 @@ namespace {
     }
 }
 
-    
+// TODO add check on rb5Block fill 
 namespace IncreaseLevel {
+    /**
+     * @brief Will Resize your buffers and size the source file buffers
+     *
+     * @param bufferIn  Buffer for the current level of compression.
+     * @param bufferOut Buffer for the higher level of compression.
+     * @param rbxLevel  Number indicating the level you want to increase to.
+     *
+     * @assumption      Level is less than 6.
+     */
     void initData(
             std::vector<std::uint8_t> bufferIn, 
             std::vector<std::uint8_t> bufferOut, 
@@ -51,6 +60,13 @@ namespace IncreaseLevel {
         adjustResultBufferSize(bufferIn, bufferOut, rbxLevel);
     }
 
+    /**
+     * @brief fill dat containers so you can convert to a higher level.
+     *
+     * @param rb5Block  Block of sieved rb5 format bytes, for the level you desire.
+     *
+     * @assumption      dat buffers are properly resized before hand.
+     */
     void fillDATContainers(const std::span<const std::uint8_t> rb5Block) {
         std::size_t rbXIndex = 0;
         std::uint8_t rotatingMask = 1;
@@ -65,6 +81,15 @@ namespace IncreaseLevel {
                 }
     }
 
+    /**
+     * @brief Apply a higher compression to a buffer given rb5 buffer.
+     *
+     * @param rb5Block  Block of rb5 compressed bytes.
+     * @param rbxBlock  Block that will hold the resulting compression.
+     *
+     * @assumption      Both blocks are formatted and sized properly.
+     * @assumption      dat is filled and sized properly.
+     */
     void CompressHigher(const std::span<const std::uint8_t> rb5Block, std::span<std::uint8_t> rbxBlock) {
          for (std::size_t block = 0; block < rb5Block.size(); block++)
             if (rb5Block[block]) 
