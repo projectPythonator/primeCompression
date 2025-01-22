@@ -192,11 +192,18 @@ namespace {
             case cli_project_switches::default_op: break;
         }
     }
-
-
 }
 
+// TODO missing the function that holds handles non static options.
 namespace Parser {
+
+    /**
+     * @brief Tailored function to handle numbers and file names.
+     *
+     * @param token         string that holds the current cli arguement.
+     * @param fileName      string we use to store if it is a file name
+     * @param threadCount   number we use to store token if it is a number.
+     */
     void handleNotOption(const std::span<const char> token, std::span<char> fileName, std::size_t &threadCount) {
         if (isNumber(token)) {
             if (last_project != cli_project_switches::job_op) {
@@ -219,6 +226,17 @@ namespace Parser {
     }
     */
 
+    /**
+     * @brief   Walks the cli args and then sets options accordingly
+     *
+     * @param argc      Standard c main cli args, the number.
+     * @param argv      Standard c main cli args, the strings.
+     * @param fileName  Will hold any file names we get.
+     * @param values    Will hold any number based arguements we get.
+     *
+     * TODO still need to add ability to exit after finding this option.
+     * TODO fix file name to handle more than one
+     */
     void handleArgs(int argc, char *argv[], std::span<char> fileName, std::span<std::size_t> values) {
         std::size_t i = 0;
         for (std::string_view arg: std::span(argv, argc)) {
@@ -245,6 +263,5 @@ namespace Parser {
             }
             i++;
         }
-
     }
 }
