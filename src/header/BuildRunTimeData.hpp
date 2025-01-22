@@ -12,12 +12,6 @@
 
 
 namespace InitData {
-
-    void initForPrimesToBlocks(const std::span<const char>, const std::span<const char>*);
-    void initForBlocksToBlocksHigher(const std::span<const char>, const std::span<const char>, std::size_t);
-    void initForBlocksToBlocksLower(const std::span<const char>, const std::span<const char>, std::size_t);
-    void initForBlocksToPrimes(const std::span<const char>*, const std::span<const char>);
-
     void initProgramData(const std::span<const char>, const std::span<const char>, std::size_t, std::size_t);
 }
 

@@ -25,16 +25,28 @@ namespace {
             DecreaseLevel::fillDATContainers(tmpVecSpan);
         }
     }
-}
 
-// TODO Find a place for storing in out buffers or at least the sizes needed
-// TODO Data needs to be ordered before coming into this namespace
-namespace InitData {
+    /**
+     * @brief Tailored function to set program up for this endpoint.
+     *
+     * @param inName    String that holds the in file name [stdin default].
+     * @param outName   String that holds the out file name [stdout default].
+     *
+     * @assumption      Files exist.
+     */
     void initForPrimesToBlocks(const std::span<char> inName, const std::span<char> outName) {
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputText);
         ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);
     }
 
+    /**
+     * @brief Tailored function to set program up for this endpoint.
+     *
+     * @param inName    String that holds the in file name [stdin default].
+     * @param outName   String that holds the out file name [stdout default].
+     *
+     * @assumption      Files exist.
+     */
     void initForBlocksToBlocksHigher(
             const std::span<char> inName , 
             const std::span<char> outName, 
@@ -44,6 +56,14 @@ namespace InitData {
         prepLevelChange(true, newLevel);
     }
 
+    /**
+     * @brief Tailored function to set program up for this endpoint.
+     *
+     * @param inName    String that holds the in file name [stdin default].
+     * @param outName   String that holds the out file name [stdout default].
+     *
+     * @assumption      Files exist.
+     */
     void initForBlocksToBlocksLower(
             const std::span<char> inName , 
             const std::span<char> outName, 
@@ -53,14 +73,38 @@ namespace InitData {
         prepLevelChange(false, newLevel);
     }
 
+    /**
+     * @brief Tailored function to set program up for this endpoint.
+     *
+     * @param inName    String that holds the in file name [stdin default].
+     * @param outName   String that holds the out file name [stdout default].
+     *
+     * @assumption      Files exist.
+     */
     void initForBlocksToPrimes(const std::span<char> inName , const std::span<char> outName) {
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputBinary);
         ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputText);
     }
+}
 
+// TODO Find a place for storing in out buffers or at least the sizes needed
+// TODO Data needs to be ordered before coming into this namespace
+// TODO add option 5 to go from higher to lower and lower to higher
+namespace InitData {
+
+    /**
+     * @brief Will set the program files up based on options given
+     *
+     * @param inName    String that holds the in file name [stdin default].
+     * @param outName   String that holds the out file name [stdout default].
+     * @param level     Number indicating the desired compression.
+     * @param option    Number holding the io option. (need to create an enum).
+     */
     void initProgramData(
-            const std::span<char> inName , const std::span<char> outName, 
-            std::size_t level, std::size_t option) {
+            const std::span<char> inName, 
+            const std::span<char> outName, 
+            std::size_t level, 
+            std::size_t option) {
         switch (option) {
             case 0u: initForPrimesToBlocks(inName, outName); break;
             case 1u: initForBlocksToBlocksHigher(inName, outName, level); break;
