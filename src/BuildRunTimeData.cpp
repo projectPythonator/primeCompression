@@ -4,12 +4,7 @@ namespace {
     void returnMemory(std::vector<std::uint8_t> &obj) {
         obj.clear();
     }
-}
 
-// TODO update namespace name
-// TODO change const char * to string or something
-// TODO figure out compressed primes typing
-namespace InitData {
     void prepLevelChange(bool isCompress, std::size_t rbxLevel) {
         std::vector<std::uint8_t> tmpIn;
         std::vector<std::uint8_t> tmpOut;
@@ -30,7 +25,10 @@ namespace InitData {
             DecreaseLevel::fillDATContainers(tmpVecSpan);
         }
     }
+}
 
+// TODO Find a place for storing in out buffers or at least the sizes needed
+namespace InitData {
     void initForPrimesToBlocks(const std::span<char> inName, const std::span<char> outName) {
         ProjectIO::setFileForProgram(inName, ProjectIO::FileModeCode::inputText);
         ProjectIO::setFileForProgram(outName, ProjectIO::FileModeCode::outputBinary);

@@ -11,9 +11,7 @@
 #include "SieveSegment.hpp"
 
 
-// TODO change const std::span<const char>* to string or something
 namespace InitData {
-    void prepLevelChange(bool, std::size_t);
 
     void initForPrimesToBlocks(const std::span<const char>, const std::span<const char>*);
     void initForBlocksToBlocksHigher(const std::span<const char>, const std::span<const char>, std::size_t);
