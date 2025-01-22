@@ -3,7 +3,7 @@
 //
 #ifndef FAST_MATH_HPP
 #define FAST_MATH_HPP
-#include "IntegralTypeIncludes.hpp"
+#include "IntegralIncludes.hpp"
 #include "ContainerIncludes.hpp"
 #include <cmath>
                   

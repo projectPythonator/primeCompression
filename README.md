@@ -1,15 +1,17 @@
-TODO fix docs in files   
+TODO touch up function docs in files   
+TODO add comments to namespace variables and source file namespace scoped functions   
 TODO Complete todos in files   
-TODO Fix make file so program can work   
-TODO create or find way to nicely handle cli    
-TODO fix a few file name bugs   
+TODO Put the program together so it works   
+TODO create or find way to nicely handle cli wip going okay for now    
 TODO profile best layout for some files   
 TODO check if loop unrolling i worth with profiling   
 Updates: Scope change listed in last commit now this project is just handling list of primes either from file or from stdin.  
+   
 CURRENT_STATE   
 need to get IO hooked up and a few more things in place   
 with how i programmed it we should be able to drop a few different multi thread versions to test the best one   
-No longer need the move data files I think.   
+No longer need the move data files.   
+Need to find which files could use classes.  
   
 CURRENT USAGE   
 None yet doesn't work as a program but will fix the make file   

@@ -2,7 +2,7 @@
 #define PROJECT_CONSTANTS_HPP
 
 #include "ContainerIncludes.hpp"
-#include "IntegralTypeIncludes.hpp"
+#include "IntegralIncludes.hpp"
 
 namespace ProjectConstants {
     constexpr std::uint64_t phi_values[9] = {

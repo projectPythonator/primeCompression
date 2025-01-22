@@ -1,7 +1,7 @@
 #ifndef PROJECT_FILE_IO_HPP
 #define PROJECT_FILE_IO_HPP
 
-#include "IntegralTypeIncludes.hpp"
+#include "IntegralIncludes.hpp"
 #include "ContainerIncludes.hpp"
 #include "UtilityIncludes.hpp"
 #include <cinttypes> // for fixed width scan and print types

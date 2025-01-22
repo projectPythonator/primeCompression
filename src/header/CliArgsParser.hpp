@@ -3,7 +3,7 @@
 
 #include "FileSystemIncludes.hpp"
 #include "ContainerIncludes.hpp"
-#include "IntegralTypeIncludes.hpp"
+#include "IntegralIncludes.hpp"
 #include "UtilityIncludes.hpp"
 
 namespace Parser {

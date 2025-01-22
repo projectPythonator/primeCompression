@@ -2,7 +2,7 @@
 #define TEXT_TO_PRIMES_HPP
 
 #include "ContainerIncludes.hpp"
-#include "IntegralTypeIncludes.hpp"
+#include "IntegralIncludes.hpp"
 
 
 namespace EndPointConversions {

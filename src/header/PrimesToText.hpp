@@ -2,7 +2,7 @@
 #define PRIMES_TO_TEXT_HPP
 
 #include "ContainerIncludes.hpp"
-#include "IntegralTypeIncludes.hpp"
+#include "IntegralIncludes.hpp"
 #include "UtilityIncludes.hpp"
 
 

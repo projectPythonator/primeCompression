@@ -3,7 +3,7 @@
 
 #include "ContainerIncludes.hpp"
 #include "FastMath.hpp"
-#include "IntegralTypeIncludes.hpp"
+#include "IntegralIncludes.hpp"
 #include "ProjectConstants.hpp"
 #include "UtilityIncludes.hpp"
 

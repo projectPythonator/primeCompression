@@ -2,7 +2,7 @@
 #define BUILD_RUNTIME_DATA_HPP
 
 #include "ContainerIncludes.hpp"
-#include "IntegralTypeIncludes.hpp"
+#include "IntegralIncludes.hpp"
 #include "ChangeLevelHigher.hpp"
 #include "ChangeLevelLower.hpp"
 #include "ProjectFileIO.hpp"
