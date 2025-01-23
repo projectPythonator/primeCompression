@@ -1,5 +1,4 @@
 #include "header/ProjectFileIO.hpp"
-#include <cassert>
 
 // moved from header to source since I don't think we need to project to see these
 namespace {
@@ -103,22 +102,7 @@ namespace ProjectIO {
         writeBlock_8Byte(buf);
     }
 
-    /**
-     * @brief finds last set byte in buf then prints upto that byte
-     * scans buffer to print upto the last set byte, calls 
-     *
-     * @param buf   span of bytes to print
-     *
-     * @assumption  buffer isn't size 0. (checked)
-     */
-    void flushBuffer(const std::span<const std::uint8_t> buf) {
-        assert(buf.size() > 0);
-        std::size_t lastIndex = buf.size() - 1;
-        for (; lastIndex > 0; lastIndex--)
-            if (buf[lastIndex])
-                break;
-        writeBlock_1Byte(buf.subspan(0, lastIndex));
-    }
+    // Removed flushBuffer
 
     /**
      * @brief reads a block of bytes then checks for EOF.

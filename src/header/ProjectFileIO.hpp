@@ -3,6 +3,7 @@
 
 #include "IntegralIncludes.hpp"
 #include "ContainerIncludes.hpp"
+#include "TestingIncludes.hpp"
 #include "UtilityIncludes.hpp"
 #include <cinttypes> // for fixed width scan and print types
 
@@ -31,13 +32,7 @@ namespace ProjectIO {
      */
     void writeBlockOfBinary(const std::span<std::uint64_t>);
 
-    /**
-     * @brief Call when you need to truncate a byte buffer.
-     *
-     * @param buf   span of bytes to print
-     * @assumption  buffer isn't size 0. (checked)
-     */
-    void flushBuffer(const std::span<const std::uint8_t>);
+    // removed void flushBuffer(const std::span<const std::uint8_t>);
 
     /**
      * @brief Call when you want to read a block of bytes.
