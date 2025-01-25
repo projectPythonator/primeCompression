@@ -1,5 +1,4 @@
 #include "header/ChangeLevelLower.hpp"
-#include <cassert>
 
 namespace {
     std::vector<std::size_t> dat_byte_positions;
@@ -34,6 +33,11 @@ namespace {
     }
 }
 
+// TODO look into making this a class
+//  - Instance vars would be BufferOut/rb5Block
+//  - Class vars would be dat* found above
+//  - new would be current index block or something
+//  - this might allow us to deal with stuff better
 namespace DecreaseLevel {
     /**
      * @brief Will Resize your buffers and size the source file buffers
