@@ -1,5 +1,4 @@
 #include "header/ChangeLevelHigher.hpp"
-#include <cassert>
 
 namespace {
     std::vector<std::size_t> dat_lookup;
