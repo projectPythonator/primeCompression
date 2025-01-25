@@ -1,5 +1,4 @@
 #include "header/PrimesToText.hpp"
-#include <cassert>
 
 namespace {
     constexpr std::uint8_t nl_zero = '\n'-'0';
@@ -42,13 +41,20 @@ namespace {
 
     std::size_t getNumberSize(std::uint64_t n) {
         for (std::size_t i = 20; i > 0; i--) 
-            if (n < log_10_lookup[i])
+            if (n >= log_10_lookup[i])
                 return i;
         return 64u;
     }
 
-    void addNextNumberBase10_9d(std::span<std::uint8_t> number, std::uint32_t n) {
+    void addNextNumberBase10_9d(const std::span<std::uint8_t> number, std::uint32_t n) {
         assert(number.size() < max_9_digit); // do I need this? maybe
+        for (std::uint8_t &digit: number) {
+            digit = n % base;
+            n /= base;
+        }
+        std::reverse(number.begin(), number.end());
+        // use code below if above is too slow
+        /*
         std::uint8_t buf[max_9_digit] = {0};
         std::size_t b = 0;
         do {
@@ -56,10 +62,19 @@ namespace {
             n /= base;
         } while (b < number.size());
         std::memcpy(number.data(), buf, number.size());
+        */
     }
 
-    void addNextNumberBase10_16d(std::span<std::uint8_t> number, std::uint64_t n) {
+    void addNextNumberBase10_16d(const std::span<std::uint8_t> number, std::uint64_t n) {
         assert(number.size() < max_16_digit); // do I need this? maybe
+        for (std::uint8_t &digit: number) {
+            digit = n % base;
+            n /= base;
+        }
+        std::reverse(number.begin(), number.end());
+
+        // use code below if above is too slow
+        /*
         std::uint8_t buf[max_16_digit] = {0};
         std::size_t b = 0;
         do {
@@ -67,10 +82,18 @@ namespace {
             n /= base;
         } while (b < number.size());
         std::memcpy(number.data(), buf, number.size());
+        */
     }
 
-    void addNextNumberBase10_20d(std::span<std::uint8_t> number, std::uint64_t n) {
+    void addNextNumberBase10_20d(const std::span<std::uint8_t> number, std::uint64_t n) {
         assert(number.size() < max_20_digit); // do I need this? maybe
+        for (std::uint8_t &digit: number) {
+            digit = n % base;
+            n /= base;
+        }
+        std::reverse(number.begin(), number.end());
+        // use code below if above is too slow
+        /*
         std::uint8_t buf[max_20_digit] = {0};
         std::size_t b = 0;
         #pragma GCC unroll 4
@@ -79,6 +102,7 @@ namespace {
             n /= base;
         } while (b < number.size());
         std::memcpy(number.data(), buf, number.size());
+        */
     }
 }
 
@@ -108,7 +132,7 @@ namespace EndPointConversions {
      *
      * @assumption_1    no prime is 0
      */
-    void addNextNumberBase10(std::span<std::uint8_t> number, std::uint64_t n) {
+    void addNextNumberBase10(const std::span<std::uint8_t> number, std::uint64_t n) {
         assert(number.size() < max_20_digit); // do I need this? maybe
         #pragma GCC unroll 4
         for (std::uint8_t &digit: number) {
@@ -131,11 +155,11 @@ namespace EndPointConversions {
      * @assumption_1    numbers is big enough to hold primes
      * @assumption_1    no prime is 0
      */
-    std::size_t convertPrimesBlock(std::span<const std::uint64_t> primes, std::span<std::uint8_t> numbers) {
+    std::size_t convertPrimesBlock(const std::span<const std::uint64_t> primes, std::span<std::uint8_t> numbers) {
         std::fill(numbers.begin(), numbers.end(), nl_zero);
         std::size_t bufferIndex = 0;
         std::size_t currentSize = getNumberSize(primes[0]);
-        for (const std::uint64_t prime: primes) {
+        for (const std::uint64_t &prime: primes) {
             currentSize = getLog10Size(prime, currentSize);
             addNextNumberBase10(numbers.subspan(bufferIndex, currentSize), prime);
             bufferIndex += (currentSize + 1);
