@@ -1,5 +1,4 @@
 #include "header/FastMath.hpp"
-#include <cassert>
 
 
 // TODO add documentation
