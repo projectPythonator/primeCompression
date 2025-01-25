@@ -3,7 +3,12 @@
 // I think I am going with
 // Prog [options] inputFile
 // if inputfile isn't selected the stdin option must be used
+// fix naming for handleSwitches names
+// look into getting a more dynamic args parser
 namespace {
+
+    constexpr std::size_t max_compress_level = 6u;
+    
     enum class cli_project_switches {
         level_0,
         level_1,
@@ -116,7 +121,7 @@ namespace {
         cli_static_switches::version_op
     };
 
-    cli_static_switches last_static = cli_static_switches::default_op;
+    //cli_static_switches last_static = cli_static_switches::default_op;
     cli_project_switches last_project = cli_project_switches::default_op;
 
     std::size_t staticIndex(const std::span<const char> token) {
@@ -124,16 +129,11 @@ namespace {
         std::size_t i = 0;
         for (const auto &option: cli_static_options) {
             if (token_view == option)  {
-                last_static = cli_static_codes[i];
                 return i;
             }
             i++;
         }
         return i;
-    }
-
-    bool isStaticSwitch(const std::span<const char> token) {
-        return (staticIndex(token) < cli_static_options.size());
     }
 
     std::size_t projectIndex(const std::span<const char> token) {
@@ -149,10 +149,13 @@ namespace {
         return i;
     }
 
+    bool isStaticSwitch(const std::span<const char> token) {
+        return (staticIndex(token) < cli_static_options.size());
+    }
+
     bool isProjectSwitch(const std::span<const char> token) {
         return (projectIndex(token) < cli_project_options.size());
     }
-
 
     bool isNumber(const std::span<const char> token) {
         return std::all_of(token.begin(), token.end(), [](auto &el) { return std::isdigit(el); } );
@@ -163,39 +166,52 @@ namespace {
         return std::filesystem::exists(filePath);
     }
 
-    void handleStaticSwitches(cli_static_switches op) {
+    std::size_t handleStaticSwitches(cli_static_switches op) {
         switch (op) {
-            case cli_static_switches::help_op: break;
-            case cli_static_switches::license_op: break;
-            case cli_static_switches::version_op: break;
-            case cli_static_switches::default_op: break;
+            case cli_static_switches::help_op:      return 0u;
+            case cli_static_switches::license_op:   return 1u;
+            case cli_static_switches::version_op:   return 2u;
+            case cli_static_switches::default_op:   return 3u;
         }
+        return 3u;
     }
 
-    void handleProjectSwitches(cli_project_switches op) {
+    std::size_t handleProjectSwitches(cli_project_switches op) {
         switch (op) {
-            case cli_project_switches::level_0: break;
-            case cli_project_switches::level_1: break;
-            case cli_project_switches::level_2: break;
-            case cli_project_switches::level_3: break;
-            case cli_project_switches::level_4: break;
-            case cli_project_switches::level_5: break;
-            case cli_project_switches::level_6: break;
-            case cli_project_switches::bin_op: break;
-            case cli_project_switches::job_op: break;
-            case cli_project_switches::test_op: break;
-            case cli_project_switches::force_op: break;
-            case cli_project_switches::stdout_op: break;
-            case cli_project_switches::verbose_op: break;
-            case cli_project_switches::recompress_op: break;
-            case cli_project_switches::decompress_op: break;
-            case cli_project_switches::default_op: break;
+            case cli_project_switches::level_0: return 0u;
+            case cli_project_switches::level_1: return 1u;
+            case cli_project_switches::level_2: return 2u;
+            case cli_project_switches::level_3: return 3u;
+            case cli_project_switches::level_4: return 4u;
+            case cli_project_switches::level_5: return 5u;
+            case cli_project_switches::level_6: return 6u;
+            case cli_project_switches::bin_op:  return 7u;
+            case cli_project_switches::job_op:  return 8u;
+            case cli_project_switches::test_op: return 9u;
+            case cli_project_switches::force_op:        return 10u;
+            case cli_project_switches::stdout_op:       return 11u;
+            case cli_project_switches::verbose_op:      return 12u;
+            case cli_project_switches::recompress_op:   return 13u;
+            case cli_project_switches::decompress_op:   return 14u;
+            case cli_project_switches::default_op:      return 15u;
         }
+        return 15u;
     }
 }
 
 // TODO missing the function that holds handles non static options.
+// TODO add getters 
+// TODO add fix up function
 namespace Parser {
+    ProjectSettings::ProjectSettings() {
+        std::size_t len = handleProjectSwitches(cli_project_switches::default_op) + 1u;
+        staticSet.assign(cli_static_options.size(), false);
+
+        projectSet.assign(len, false);
+        projectFileName = "stdin";
+        projectThreadCount = 1;
+        projectCompressionLevel = 1;
+    }
 
     /**
      * @brief Tailored function to handle numbers and file names.
@@ -204,27 +220,47 @@ namespace Parser {
      * @param fileName      string we use to store if it is a file name
      * @param threadCount   number we use to store token if it is a number.
      */
-    void handleNotOption(const std::span<const char> token, std::span<char> fileName, std::size_t &threadCount) {
+    void ProjectSettings::handleNotOption(const std::span<const char> token) {
         if (isNumber(token)) {
             if (last_project != cli_project_switches::job_op) {
                 perror("Last option was not -T");
                 return;
             }
-            threadCount = stoull(std::string(token.begin(), token.end()));
+            projectThreadCount = stoull(std::string(token.begin(), token.end()));
         } else if (isValidFile(token)) {
-            std::copy(token.begin(), token.end(), fileName.begin());
+            std::copy(token.begin(), token.end(), projectFileName.begin());
+            // change to string view
         } else {
             perror("File name given was not valid");
+            // abort
         }
     }
 
 
-    /*
-    void handleArg(const std::span<const char> token, std::span<char> fileName, std::span<std::size_t> values) {
-
-
+    bool ProjectSettings::scanStatic(int argc, char *argv[]) {
+        // use external ind i if no compile
+        for (std::string_view arg: std::span(argv+1, argc)) {
+            if (isStaticSwitch(arg)) {
+                std::size_t index = staticIndex(arg);
+                index = handleStaticSwitches(cli_static_codes[index]);
+                staticSet[index] = true;
+                return true;
+            }
+        }
+        return false;
     }
-    */
+
+    void ProjectSettings::scanProject(int argc, char *argv[]) {
+        for (std::string_view arg: std::span(argv+1, argc)) {
+            if (isProjectSwitch(arg)) {
+                std::size_t optionIndex = handleProjectSwitches(cli_project_codes[projectIndex(arg)]);
+                projectSet[optionIndex] = true;
+                return;
+            } else {
+                ProjectSettings::handleNotOption(arg);
+            }
+        }
+    }
 
     /**
      * @brief   Walks the cli args and then sets options accordingly
@@ -237,31 +273,52 @@ namespace Parser {
      * TODO still need to add ability to exit after finding this option.
      * TODO fix file name to handle more than one
      */
-    void handleArgs(int argc, char *argv[], std::span<char> fileName, std::span<std::size_t> values) {
-        std::size_t i = 0;
-        for (std::string_view arg: std::span(argv, argc)) {
-            if (i == 0)
-                continue;
-            if (isStaticSwitch(arg)) {
-                handleStaticSwitches(cli_static_codes[staticIndex(arg)]);
-                return;
-            }
-            i++;
-        }
+    bool ProjectSettings::handleArgs(int argc, char *argv[]) {
+        if (ProjectSettings::scanStatic(argc, argv))
+            return false;
+        ProjectSettings::scanProject(argc, argv);
+        return true;
+    }
 
-        i = 0;
-        for (std::string_view arg: std::span(argv, argc)) {
-            if (i == 0)
-                continue;
-            if (isProjectSwitch(arg)) {
-                handleProjectSwitches(cli_project_codes[projectIndex(arg)]);
-                return;
-            } else {
-                fileName[0] = 'a';
-                values[0] = 0u;
+    // need error checking on having a level but requesting decopression
+    void ProjectSettings::afterFix() {
+        if (projectSet[handleProjectSwitches(cli_project_switches::stdout_op)])
+            projectFileName = "stdin";
+        for (std::size_t i = 0; i < max_compress_level; i++)
+            if (projectSet[i])
+                projectCompressionLevel = i;
+        assert((isRecompress() ^ isDecompress()) || !(isRecompress() && isDecompress()));
+        // assert for test and compression level
+        // force does nothing rightnow
+        // fix output file name
+        // need to program verbose to actually do something
+    }
 
-            }
-            i++;
-        }
+    bool ProjectSettings::isVerbose() { 
+        return projectSet[handleProjectSwitches(cli_project_switches::verbose_op)];
+    }
+
+    bool ProjectSettings::isStdout() { 
+        return projectSet[handleProjectSwitches(cli_project_switches::stdout_op)];
+    }
+
+    bool ProjectSettings::isTest() { 
+        return projectSet[handleProjectSwitches(cli_project_switches::test_op)];
+    }
+
+    bool ProjectSettings::isBinFile() { 
+        return projectSet[handleProjectSwitches(cli_project_switches::bin_op)];
+    }
+
+    bool ProjectSettings::isForce() { 
+        return projectSet[handleProjectSwitches(cli_project_switches::force_op)];
+    }
+
+    bool ProjectSettings::isDecompress() { 
+        return projectSet[handleProjectSwitches(cli_project_switches::decompress_op)];
+    }
+
+    bool ProjectSettings::isRecompress() { 
+        return projectSet[handleProjectSwitches(cli_project_switches::recompress_op)];
     }
 }
