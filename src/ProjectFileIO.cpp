@@ -102,6 +102,15 @@ namespace ProjectIO {
         writeBlock_8Byte(buf);
     }
 
+    /**
+     * @brief prints byte block to binary file
+     *
+     * @param buf   span of bytes to print
+     */
+    void writeBlockOfBytes(const std::span<std::uint8_t> buf) {
+        writeBlock_1Byte(buf);
+    }
+
     // Removed flushBuffer
 
     /**
