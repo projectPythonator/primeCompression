@@ -1,6 +1,10 @@
 #include "header/ChangeBetweenPrimesAndBlocks.hpp"
-#include <cassert>
 
+// TODO look into making this a class
+//  - two classes
+//  - going from num -> bytes has bytes as the data being worked on
+//  - going from bytes -> nums has numbers as the data being worked on
+//  - this might allow us to deal with stuff better
 namespace EndpointConversion {
     /**
      * @brief Get amount of bytes needed to hold range of primes.
