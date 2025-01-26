@@ -5,6 +5,7 @@
 #define FAST_MATH_HPP
 #include "IntegralIncludes.hpp"
 #include "ContainerIncludes.hpp"
+#include "TestingIncludes.hpp"
 #include <cmath>
                   
 // TODO does it make more sense
