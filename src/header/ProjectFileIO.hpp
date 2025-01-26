@@ -32,6 +32,13 @@ namespace ProjectIO {
      */
     void writeBlockOfBinary(const std::span<std::uint64_t>);
 
+    /**
+     * @brief Call when you just need to print block of bytes
+     *
+     * @param buf   span of bytes to print
+     */
+    void writeBlockOfBytes(const std::span<std::uint8_t> buf);
+
     // removed void flushBuffer(const std::span<const std::uint8_t>);
 
     /**
