@@ -13,8 +13,8 @@ namespace EndPointConversions {
      *
      * @assumption_1    no prime is 0
      */
-    void addNextNumberBase10_XXd(std::span<std::uint8_t>, std::uint64_t);
-    void addNextNumberBase10(std::span<std::uint8_t>, std::uint64_t);
+    //void addNextNumberBase10_XXd(std::span<std::uint8_t>, std::uint64_t);
+    //void addNextNumberBase10(std::span<std::uint8_t>, std::uint64_t);
 
     /**
      * @brief convert list of numbers into a buffer
@@ -27,6 +27,18 @@ namespace EndPointConversions {
      * @assumption_1    numbers is big enough to hold primes
      * @assumption_1    no prime is 0
      */
-    std::size_t convertPrimesBlock(std::span<const std::uint64_t>, std::span<std::uint8_t>);
+    //std::size_t convertPrimesBlock(std::span<const std::uint64_t>, std::span<std::uint8_t>);
+
+    class ToText {
+        private:
+            std::vector<std::uint8_t> numbers;
+        public: // use protected?
+            void addNextNumberBase10_XXd(std::span<std::uint8_t>, std::uint64_t);
+            void addNextNumberBase10(std::span<std::uint8_t>, std::uint64_t);
+
+            std::size_t convertPrimesBlock(std::span<const std::uint64_t>);
+
+            std::span<std::uint8_t> getFirstSpan(std::size_t spanSize) { return std::span(numbers.begin(), spanSize); }
+    };
 }
 #endif

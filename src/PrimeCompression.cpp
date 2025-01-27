@@ -12,6 +12,7 @@
 
 
 int main() {
+    /*
     std::vector<std::uint64_t> test1(10, 0);
     std::vector<std::uint8_t> test2(100, 0);
     for (std::uint64_t i = 0; i < test1.size(); i++)
@@ -26,5 +27,6 @@ int main() {
     for (const std::uint8_t el: std::span(test2.begin(), amt))
         std::cout << (char)(el+'0');
     std::cout << "hello world";
+    */
     return 0;
 }

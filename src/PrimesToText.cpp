@@ -110,13 +110,13 @@ namespace EndPointConversions {
     /**
      * @brief convert number to string optimized see below
      */
-    void addNextNumberBase10_XXd(std::span<std::uint8_t> number, std::uint64_t n) {
+    void ToText::addNextNumberBase10_XXd(std::span<std::uint8_t> num, std::uint64_t n) {
         // can probably change these into function pointers maybe
-        assert(number.size() < max_20_digit); 
-        switch(size_lookup[number.size()]) {
-            case 0: addNextNumberBase10_9d(number, (uint32_t)n); break;
-            case 1: addNextNumberBase10_16d(number, n);         break;
-            case 2: addNextNumberBase10_20d(number, n);         break;
+        assert(num.size() < max_20_digit); 
+        switch(size_lookup[num.size()]) {
+            case 0: addNextNumberBase10_9d(num, (uint32_t)n); break;
+            case 1: addNextNumberBase10_16d(num, n);         break;
+            case 2: addNextNumberBase10_20d(num, n);         break;
             default: perror("assert check Failed"); return;
         }
     }
@@ -132,14 +132,14 @@ namespace EndPointConversions {
      *
      * @assumption_1    no prime is 0
      */
-    void addNextNumberBase10(const std::span<std::uint8_t> number, std::uint64_t n) {
-        assert(number.size() < max_20_digit); // do I need this? maybe
+    void ToText::addNextNumberBase10(const std::span<std::uint8_t> num, std::uint64_t n) {
+        assert(num.size() < max_20_digit); // do I need this? maybe
         #pragma GCC unroll 4
-        for (std::uint8_t &digit: number) {
+        for (std::uint8_t &digit: num) {
             digit = n % base;
             n /= base;
         }
-        std::reverse(number.begin(), number.end());
+        std::reverse(num.begin(), num.end());
     }
 
     /**
@@ -155,13 +155,14 @@ namespace EndPointConversions {
      * @assumption_1    numbers is big enough to hold primes
      * @assumption_1    no prime is 0
      */
-    std::size_t convertPrimesBlock(const std::span<const std::uint64_t> primes, std::span<std::uint8_t> numbers) {
+    std::size_t ToText::convertPrimesBlock(const std::span<const std::uint64_t> primes) {
         std::fill(numbers.begin(), numbers.end(), nl_zero);
+        std::span<std::uint8_t> nums(numbers);
         std::size_t bufferIndex = 0;
         std::size_t currentSize = getNumberSize(primes[0]);
         for (const std::uint64_t &prime: primes) {
             currentSize = getLog10Size(prime, currentSize);
-            addNextNumberBase10(numbers.subspan(bufferIndex, currentSize), prime);
+            addNextNumberBase10(nums.subspan(bufferIndex, currentSize), prime);
             bufferIndex += (currentSize + 1);
         }
         return bufferIndex;
