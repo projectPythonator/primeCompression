@@ -32,6 +32,7 @@ namespace EndPointConversions {
     class ToText {
         private:
             std::vector<std::uint8_t> numbers;
+            std::span<std::uint8_t> numsSpan;
         public: // use protected?
             void addNextNumberBase10_XXd(std::span<std::uint8_t>, std::uint64_t);
             void addNextNumberBase10(std::span<std::uint8_t>, std::uint64_t);
