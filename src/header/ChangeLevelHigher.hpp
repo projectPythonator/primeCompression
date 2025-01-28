@@ -29,16 +29,40 @@ namespace IncreaseLevel {
      */
     void fillDATContainers(const std::span<const std::uint8_t>);
 
-    /**
-     * @brief Call to convert lower compression to higher compression.
-     *
-     * @param rb5Block  Block of rb5 compressed bytes.
-     * @param rbxBlock  Block that will hold the resulting compression.
-     *
-     * @assumption      Both blocks are formatted and sized properly.   (not checked)
-     * @assumption      dat is filled and sized properly.               (not checked)
-     */
-    void CompressHigher(const std::span<const std::uint8_t>, std::span<std::uint8_t>);
+
+    class ToHigher {
+        private:
+            std::span<std::uint8_t> numberSpan;
+            std::vector<std::uint8_t> numbers;
+        public: 
+            std::span<std::uint8_t> getPrintSpan() { 
+                return numberSpan; 
+            }
+
+            std::span<std::uint8_t> getSubSpan(std::size_t spanStart, std::size_t spanSize) { 
+                return numberSpan.subspan(spanStart, spanSize);
+            }
+
+            void resetSpan() {
+                numberSpan = std::span(numbers.begin(), numbers.size());
+            }
+
+            void resizeData(std::size_t newSize) {
+                numbers.assign(newSize, 0u);
+                resetSpan();
+            }
+
+            /**
+             * @brief Call to convert lower compression to higher compression.
+             *
+             * @param rb5Block  Block of rb5 compressed bytes.
+             * @param rbxBlock  Block that will hold the resulting compression.
+             *
+             * @assumption      Both blocks are formatted and sized properly.   (not checked)
+             * @assumption      dat is filled and sized properly.               (not checked)
+             */
+            void CompressHigher(const std::span<const std::uint8_t>, std::span<std::uint8_t>);
+    };
 }
 
 #endif

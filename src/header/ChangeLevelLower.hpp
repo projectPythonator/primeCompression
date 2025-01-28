@@ -28,15 +28,40 @@ namespace DecreaseLevel {
      */
     void fillDATContainers(const std::span<const std::uint8_t>);
 
-    /**
-     * @brief Call to decompress higher level to rb5.
-     *
-     * @param rbxBlock  Block of high compressed primes.
-     * @param rb5Block  Block of rb5 to hold the lower compression.
-     *
-     * @assumption      Both blocks are formatted and sized properly.
-     * @assumption      dat is filled and sized properly.
-     */
-    void CompressLower(const std::span<const std::uint8_t>, const std::span<std::uint8_t>);
+    class ToLower {
+        private:
+            std::span<std::uint8_t> numberSpan;
+            std::vector<std::uint8_t> numbers;
+        public: 
+            std::span<std::uint8_t> getPrintSpan() { 
+                return numberSpan; 
+            }
+
+            std::span<std::uint8_t> getSubSpan(std::size_t spanStart, std::size_t spanSize) { 
+                return numberSpan.subspan(spanStart, spanSize);
+            }
+
+            void resetSpan() {
+                numberSpan = std::span(numbers.begin(), numbers.size());
+            }
+
+            void resizeData(std::size_t newSize) {
+                numbers.assign(newSize, 0u);
+                resetSpan();
+            }
+
+            /**
+             * @brief Call to decompress higher level to rb5.
+             *
+             * @param rbxBlock  Block of high compressed primes.
+             * @param rb5Block  Block of rb5 to hold the lower compression.
+             *
+             * @assumption      Both blocks are formatted and sized properly.
+             * @assumption      dat is filled and sized properly.
+             */
+            void CompressLower(const std::span<const std::uint8_t>, const std::span<std::uint8_t>);
+    };
+
+
 }
 #endif
