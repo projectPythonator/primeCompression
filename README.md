@@ -1,6 +1,6 @@
-TODO touch up function docs in files   
+TODO touch up function docs in files(mostly done)   
 TODO add comments to namespace variables and source file namespace scoped functions   
-TODO Complete todos in files   
+TODO Complete todos in files(updated todos and getting some done)   
 TODO Put the program together so it works   
 TODO create or find way to nicely handle cli wip going okay for now    
 TODO profile best layout for some files   
@@ -9,9 +9,11 @@ Updates: Scope change listed in last commit now this project is just handling li
    
 CURRENT_STATE   
 need to get IO hooked up and a few more things in place   
-with how i programmed it we should be able to drop a few different multi thread versions to test the best one   
-No longer need the move data files.   
-Need to find which files could use classes.  
+Hooked up meaning I need to call the right functions then it hsould work.   
+Currently going with this method, We will use tasks for each stage of compresssion.   
+Each stage below would be put into a queue allowing for multithreading.  
+Stage example: input -> convert text to numbers -> compress numbers into RB5 -> output.   
+
   
 CURRENT USAGE   
 None yet doesn't work as a program but will fix the make file   
