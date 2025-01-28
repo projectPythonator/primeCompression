@@ -89,7 +89,9 @@ namespace IncreaseLevel {
      * @assumption      Both blocks are formatted and sized properly.
      * @assumption      dat is filled and sized properly.
      */
-    void CompressHigher(const std::span<const std::uint8_t> rb5Block, std::span<std::uint8_t> rbxBlock) {
+    void ToHigher::CompressHigher(
+            const std::span<const std::uint8_t> rb5Block, 
+            std::span<std::uint8_t> rbxBlock) {
          for (std::size_t block = 0; block < rb5Block.size(); block++)
             if (rb5Block[block]) 
                 for (std::uint8_t mask = rb5Block[block]; mask; mask ^= (-mask & mask)) {

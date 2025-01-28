@@ -33,11 +33,7 @@ namespace {
     }
 }
 
-// TODO look into making this a class
-//  - Instance vars would be BufferOut/rb5Block
-//  - Class vars would be dat* found above
-//  - new would be current index block or something
-//  - this might allow us to deal with stuff better
+// TODO look into making this a class done
 namespace DecreaseLevel {
     /**
      * @brief Will Resize your buffers and size the source file buffers
@@ -84,7 +80,9 @@ namespace DecreaseLevel {
      * @assumption      Both blocks are formatted and sized properly.
      * @assumption      dat is filled and sized properly.
      */
-    void CompressLower(const std::span<const std::uint8_t> rbxBlock, const std::span<std::uint8_t> rb5Block) {
+    void ToLower::CompressLower(
+            const std::span<const std::uint8_t> rbxBlock, 
+            const std::span<std::uint8_t> rb5Block) {
         for (std::size_t block = 0; block < rbxBlock.size(); block++)
             if (rbxBlock[block]) 
                 for (std::uint8_t mask = rbxBlock[block]; mask; mask ^= (-mask & mask)) {

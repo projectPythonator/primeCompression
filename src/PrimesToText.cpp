@@ -110,7 +110,7 @@ namespace EndPointConversions {
     /**
      * @brief convert number to string optimized see below
      */
-    void ToText::addNextNumberBase10_XXd(std::span<std::uint8_t> num, std::uint64_t n) {
+    void addNextNumberBase10_XXd(std::span<std::uint8_t> num, std::uint64_t n) {
         // can probably change these into function pointers maybe
         assert(num.size() < max_20_digit); 
         switch(size_lookup[num.size()]) {
@@ -132,7 +132,7 @@ namespace EndPointConversions {
      *
      * @assumption_1    no prime is 0
      */
-    void ToText::addNextNumberBase10(const std::span<std::uint8_t> num, std::uint64_t n) {
+    void addNextNumberBase10(const std::span<std::uint8_t> num, std::uint64_t n) {
         assert(num.size() < max_20_digit); // do I need this? maybe
         #pragma GCC unroll 4
         for (std::uint8_t &digit: num) {
@@ -150,14 +150,15 @@ namespace EndPointConversions {
      * @param numbers   buffer to hold the output
      * @return  end index of the buffer
      *
-     * @optimizatiion_1 have multiple threads work on section at once 
+     * @optimizatiion_1 have multiple threads work on section at once. fixed can new queue them up for different sectoins.
      *
      * @assumption_1    numbers is big enough to hold primes
      * @assumption_1    no prime is 0
      */
-    std::size_t ToText::convertPrimesBlock(const std::span<const std::uint64_t> primes) {
-        std::fill(numbers.begin(), numbers.end(), nl_zero);
-        std::span<std::uint8_t> nums(numbers);
+    std::size_t ToText::convertPrimesBlock(
+            const std::span<const std::uint64_t> primes, 
+            const std::span<std::uint8_t> nums) {
+        std::fill(nums.begin(), nums.end(), nl_zero);
         std::size_t bufferIndex = 0;
         std::size_t currentSize = getNumberSize(primes[0]);
         for (const std::uint64_t &prime: primes) {

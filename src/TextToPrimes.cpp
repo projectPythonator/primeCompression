@@ -95,14 +95,14 @@ namespace EndPointConversions {
      * @assumption_2    text only has newlines and digit chars
      * @assumption_3    starts with number and ends with '\n'
      */
-    void convertTextBlock(
+    void ToPrimes::convertTextBlock(
             std::span<const std::uint8_t> numbers, 
             std::span<const std::size_t> lengths, 
-            std::span<std::uint64_t> primes) {
+            std::span<std::uint64_t> primeNumbers) {
         std::size_t bufferIndex = 0;
         std::size_t primesIndex = 0;
-        for (const std::size_t length: lengths) {
-            primes[primesIndex++] = getNextNumberBase10(numbers.subspan(bufferIndex, length));
+        for (const std::size_t &length: lengths) {
+            primeNumbers[primesIndex++] = getNextNumberBase10(numbers.subspan(bufferIndex, length));
             bufferIndex += (length + 1);
         }
     }
