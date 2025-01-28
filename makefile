@@ -19,7 +19,7 @@ INC_FLAGS := $(addprefix -I,$(INCS_DIR))
 CPPFLAGS := $(INC_FLAGS)
 
 # using c++23 might change this for other versions too later on, change warnings?
-CXXFLAGS := -std=c++23 -O3 -Wall -Wextra -Wpedantic -Werror
+CXXFLAGS := -std=c++26 -O3 -Wall -Wextra -Wpedantic -Werror
 
 .PHONY: all OBJECT_FILES PROGRAMS clean
 all: OBJECT_FILES PROGRAMS
