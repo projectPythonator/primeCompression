@@ -128,9 +128,8 @@ namespace {
         std::basic_string_view token_view(token.data(), token.size());
         std::size_t i = 0;
         for (const auto &option: cli_static_options) {
-            if (token_view == option)  {
+            if (token_view == option) 
                 return i;
-            }
             i++;
         }
         return i;
