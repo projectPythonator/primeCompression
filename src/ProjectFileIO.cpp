@@ -25,7 +25,6 @@ namespace {
 
     
     void remove_zero_factor(const std::span<std::uint8_t> buf) {
-        assert(buf.size() % 16 == 0);
         std::for_each(buf.begin(), buf.end(), [](std::uint8_t &el) { el -= unsigned_zero; });
     }
 
@@ -39,16 +38,6 @@ namespace {
 
     void writeBlock_8Byte(const std::span<const std::uint64_t> buf) {
         std::fwrite(buf.data(), 8u, buf.size(), file_out_stream);
-    }
-
-    std::size_t setIndexLocations(const std::span<const std::uint8_t> buf, const std::span<std::size_t> indices) {
-        assert(indices.size() == text_block_max_numbers);
-        assert(buf.size() <= text_block_size);
-        std::size_t i = 0;
-        for (std::size_t b = 0; b < buf.size(); b++)
-            if (buf[b] == unsigned_line_break)
-                indices[i++] = b;
-        return i;
     }
 
     void setOurBufSize(FILE *fileStream) {
@@ -79,6 +68,14 @@ namespace {
 
 // TODO add function to call 8byte write
 namespace ProjectIO {
+    /**
+     * @brief prints byte block to binary file
+     *
+     * @param buf   span of bytes to print
+     */
+    void writeBlockOfBytes(const std::span<std::uint8_t> buf) {
+        writeBlock_1Byte(buf);
+    }
 
     /**
      * @brief print buffer of bytes
@@ -90,7 +87,7 @@ namespace ProjectIO {
      */
     void writeBlockOfText(const std::span<std::uint8_t> buf) {
         add_zero_factor(buf);
-        writeBlock_1Byte(buf);
+        writeBlockOfBytes(buf);
     }
 
     /**
@@ -103,38 +100,15 @@ namespace ProjectIO {
     }
 
     /**
-     * @brief prints byte block to binary file
-     *
-     * @param buf   span of bytes to print
-     */
-    void writeBlockOfBytes(const std::span<std::uint8_t> buf) {
-        writeBlock_1Byte(buf);
-    }
-
-    // Removed flushBuffer
-
-    /**
      * @brief reads a block of bytes then checks for EOF.
      *
      * @param buf   span that will hold the bytes read in.
      * @return      returns the number of bytes read.
      */
-    std::size_t readBlock_1Byte(const std::span<std::uint8_t> buf) {
+    std::size_t readBlockOfBytes(const std::span<std::uint8_t> buf) {
         std::size_t bytesRead = std::fread(buf.data(), 1u, buf.size(), file_in_stream);
         ProjectIO::eof_not_read = (0 == std::feof(file_in_stream));
         return bytesRead;
-    }
-
-    /**
-     * @brief reads a block of 8 byte numbers, then checks for EOF.
-     *
-     * @param buf   span that will hold the numbers in it.
-     * @return      returns the count of numbers read.
-     */
-    std::size_t readBlock_8Byte(const std::span<std::uint64_t> buf) {
-        std::size_t bytesread = std::fread(buf.data(), 8u, buf.size(), file_in_stream);
-        ProjectIO::eof_not_read = (0 == std::feof(file_in_stream));
-        return bytesread;
     }
 
     /**
@@ -143,10 +117,23 @@ namespace ProjectIO {
      * @param buf   span that will hold the block of characters.
      * @return      returns the count of bytes read.
      */
-    std::size_t readBlockNBytes(const std::span<std::uint8_t> buf) {
-        std::size_t bytesRead = readBlock_1Byte(buf);
+    std::size_t readBlockOfText(const std::span<std::uint8_t> buf) {
+        std::size_t bytesRead = readBlockOfBytes(buf);
         remove_zero_factor(buf);
         return bytesRead;
+    }
+
+
+    /**
+     * @brief reads a block of 8 byte numbers, then checks for EOF.
+     *
+     * @param buf   span that will hold the numbers in it.
+     * @return      returns the count of numbers read.
+     */
+    std::size_t readBlockOfBinary(const std::span<std::uint64_t> buf) {
+        std::size_t bytesread = std::fread(buf.data(), 8u, buf.size(), file_in_stream);
+        ProjectIO::eof_not_read = (0 == std::feof(file_in_stream));
+        return bytesread;
     }
 
     /**
@@ -180,25 +167,13 @@ namespace ProjectIO {
      *
      * @assumption  buffer size <= 20 (checked).
      */
-    std::size_t readBlockTillNL(const std::span<std::uint8_t> buf) {
+    std::size_t getNextTextBlock(const std::span<std::uint8_t> buf) {
         assert(buf.size() == text_block_size);
-        std::size_t bytesRead = readBlock_1Byte(buf.subspan(0, buf.size() - max_20_digit));
+        std::size_t bytesRead = readBlockOfBytes(buf.subspan(0, buf.size() - max_20_digit));
         if (ProjectIO::eof_not_read && buf[bytesRead-1] != '\n') 
             bytesRead += readTillNL(buf.subspan(buf.size() - max_20_digit, buf.size()));
         remove_zero_factor(buf);
         return bytesRead;
-    }
-
-    /**
-     * @brief reads block of text and map the positions of newlines.
-     *
-     * @param buf       span that will hold the block of characters.
-     * @param indices   span that holds positions of newlines.
-     * @return      count of bytes read.
-     */
-    std::size_t getNextTextBlock(const std::span<std::uint8_t> buf, const std::span<std::size_t> indices) {
-        std::size_t bytesRead = readBlockTillNL(buf);
-        return setIndexLocations(buf.subspan(0, bytesRead), indices);
     }
 
     /**
