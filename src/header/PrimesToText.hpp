@@ -3,6 +3,7 @@
 
 #include "ContainerIncludes.hpp"
 #include "IntegralIncludes.hpp"
+#include "ProjectContainers.hpp"
 #include "TestingIncludes.hpp"
 #include "UtilityIncludes.hpp"
 
@@ -18,26 +19,9 @@ namespace EndPointConversions {
 
     class ToText {
         private:
-            std::span<std::uint8_t> numberSpan;
-            std::vector<std::uint8_t> numbers;
-        public: // use protected?
-
-            std::span<std::uint8_t> getPrintSpan(std::size_t printSize) { 
-                return numberSpan.first(printSize); 
-            }
-
-            std::span<std::uint8_t> getSubSpan(std::size_t spanStart, std::size_t spanSize) { 
-                return numberSpan.subspan(spanStart, spanSize);
-            }
-
-            void resetSpan() {
-                numberSpan = std::span(numbers.begin(), numbers.size());
-            }
-
-            void resizeData(std::size_t newSize) {
-                numbers.assign(newSize, 0u);
-                resetSpan();
-            }
+            ProjectContainers::TaskData<std::uint8_t> numberData;
+        public: 
+            ToText(std::size_t bufSize): numberData(bufSize) {}
 
             /**
              * @brief convert list of numbers into a buffer

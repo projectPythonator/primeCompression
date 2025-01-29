@@ -5,6 +5,7 @@
 #include "FastMath.hpp"
 #include "IntegralIncludes.hpp"
 #include "ProjectConstants.hpp"
+#include "ProjectContainers.hpp"
 #include "TestingIncludes.hpp"
 
 namespace DecreaseLevel {
@@ -30,25 +31,9 @@ namespace DecreaseLevel {
 
     class ToLower {
         private:
-            std::span<std::uint8_t> numberSpan;
-            std::vector<std::uint8_t> numbers;
+            ProjectContainers::TaskData<std::uint8_t> numberData;
         public: 
-            std::span<std::uint8_t> getPrintSpan() { 
-                return numberSpan; 
-            }
-
-            std::span<std::uint8_t> getSubSpan(std::size_t spanStart, std::size_t spanSize) { 
-                return numberSpan.subspan(spanStart, spanSize);
-            }
-
-            void resetSpan() {
-                numberSpan = std::span(numbers.begin(), numbers.size());
-            }
-
-            void resizeData(std::size_t newSize) {
-                numbers.assign(newSize, 0u);
-                resetSpan();
-            }
+            ToLower(std::size_t bufSize): numberData(bufSize) {}
 
             /**
              * @brief Call to decompress higher level to rb5.

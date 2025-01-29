@@ -5,6 +5,8 @@
 #include "header/FastMath.hpp"
 #include "header/ProjectFileIO.hpp"
 #include "header/PrimesToText.hpp"
+#include "header/PrimesToRB5.hpp"
+#include "header/ProjectContainers.hpp"
 #include "header/TextToPrimes.hpp"
 #include "header/SieveSegment.hpp"
 

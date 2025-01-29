@@ -35,8 +35,8 @@ namespace MetaDataInfo {
         std::array<std::uint64_t, 4> numberData = {0, 0, 0, 0};
         std::vector<std::uint8_t> fileNameData(meta_data_block_size - 32u, 0);
 
-        std::size_t readResult1 = ProjectIO::readBlock_8Byte(std::span(numberData));
-        std::size_t readResult2 = ProjectIO::readBlock_1Byte(std::span(fileNameData));
+        std::size_t readResult1 = ProjectIO::readBlockOfBinary(std::span(numberData));
+        std::size_t readResult2 = ProjectIO::readBlockOfBytes(std::span(fileNameData));
         assert(readResult1 == numberData.size());
         assert(readResult2 == fileNameData.size());
 

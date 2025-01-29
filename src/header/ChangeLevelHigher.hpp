@@ -5,6 +5,7 @@
 #include "FastMath.hpp"
 #include "IntegralIncludes.hpp"
 #include "ProjectConstants.hpp"
+#include "ProjectContainers.hpp"
 #include "TestingIncludes.hpp"
     
 namespace IncreaseLevel {
@@ -32,25 +33,9 @@ namespace IncreaseLevel {
 
     class ToHigher {
         private:
-            std::span<std::uint8_t> numberSpan;
-            std::vector<std::uint8_t> numbers;
+            ProjectContainers::TaskData<std::uint8_t> byteData;
         public: 
-            std::span<std::uint8_t> getPrintSpan() { 
-                return numberSpan; 
-            }
-
-            std::span<std::uint8_t> getSubSpan(std::size_t spanStart, std::size_t spanSize) { 
-                return numberSpan.subspan(spanStart, spanSize);
-            }
-
-            void resetSpan() {
-                numberSpan = std::span(numbers.begin(), numbers.size());
-            }
-
-            void resizeData(std::size_t newSize) {
-                numbers.assign(newSize, 0u);
-                resetSpan();
-            }
+            ToHigher(std::size_t bufSize): byteData(bufSize) {}
 
             /**
              * @brief Call to convert lower compression to higher compression.

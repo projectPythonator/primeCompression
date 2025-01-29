@@ -5,6 +5,7 @@
 #include "FastMath.hpp"
 #include "IntegralIncludes.hpp"
 #include "ProjectConstants.hpp"
+#include "ProjectContainers.hpp"
 #include "UtilityIncludes.hpp"
 #include "TestingIncludes.hpp"
 
@@ -29,26 +30,9 @@ namespace EndpointConversion {
 
     class RB5ToPrimes {
         private:
-            std::span<std::uint64_t> primeSpan;
-            std::vector<std::uint64_t> primes;
+            ProjectContainers::TaskData<std::uint64_t> primeData;
         public: 
-            std::span<std::uint64_t> getPrintSpan(std::size_t printSize) { 
-                return primeSpan.first(printSize); 
-            }
-
-            std::span<std::uint64_t> getSubSpan(std::size_t spanStart, std::size_t spanSize) { 
-                return primeSpan.subspan(spanStart, spanSize);
-            }
-
-            void resetSpan() {
-                primeSpan = std::span(primes.begin(), primes.size());
-            }
-
-            void resizeData(std::size_t newSize) {
-                primes.assign(newSize, 0u);
-                resetSpan();
-            }
-
+            RB5ToPrimes(std::size_t bufSize): primeData(bufSize) {}
 
             /**
              * @brief Call to extract a list of primes from a block of bytes.

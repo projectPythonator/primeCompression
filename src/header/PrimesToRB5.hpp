@@ -5,6 +5,7 @@
 #include "FastMath.hpp"
 #include "IntegralIncludes.hpp"
 #include "ProjectConstants.hpp"
+#include "ProjectContainers.hpp"
 #include "UtilityIncludes.hpp"
 #include "TestingIncludes.hpp"
 
@@ -30,26 +31,9 @@ namespace EndpointConversion {
 
     class ToRB5 {
         private:
-            std::span<std::uint8_t> blockSpan;
-            std::vector<std::uint8_t> block;
+            ProjectContainers::TaskData<std::uint8_t> blockData;
         public: 
-            std::span<std::uint8_t> getPrintSpan(std::size_t printSize) { 
-                return blockSpan.first(printSize); 
-            }
-
-            std::span<std::uint8_t> getSubSpan(std::size_t spanStart, std::size_t spanSize) { 
-                return blockSpan.subspan(spanStart, spanSize);
-            }
-
-            void resetSpan() {
-                blockSpan = std::span(block.begin(), block.size());
-            }
-
-            void resizeData(std::size_t newSize) {
-                block.assign(newSize, 0u);
-                resetSpan();
-            }
-
+            ToRB5(std::size_t bufSize): blockData(bufSize) {}
 
             /**
              * @brief Call to compress a block of prime numbers into bytes.
