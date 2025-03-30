@@ -1,4 +1,20 @@
 #include "header/PrimesToRB5.hpp"
+#include <immintrin.h>
+
+namespace {
+    void bitwise_or_assign_simd(
+            std::span<std::uint8_t> mainBlock, 
+            std::span<std::uint8_t> sideBlock) {
+        assert(mainBlock.size() == sideBlock.size());
+        assert((mainBlock.size() % 32) == 0);
+        for (std::size_t i = 0; i < mainBlock.size(); i += 32) {
+            __m256i mainVec = _mm256_loadu_si256(reinterpret_cast<const __m256i*> (&mainBlock[i]));
+            __m256i sideVec = _mm256_loadu_si256(reinterpret_cast<const __m256i*> (&sideBlock[i]));
+            mainVec = _mm256_or_si256(mainVec, sideVec);
+            _mm256_storeu_si256(reinterpret_cast<__m256i*> (&mainBlock[i]), mainVec);
+        }
+    }
+}
 
 // Change namespace
 namespace EndpointConversion {
@@ -25,6 +41,9 @@ namespace EndpointConversion {
         primesOut.resize(blockSize(primesIn.front(), primesIn.back()));
     }
 
+    void mergeSpans(std::span<std::uint8_t> mainBlock, std::span<std::uint8_t> sideBlock) {
+        bitwise_or_assign_simd(mainBlock, sideBlock);
+    }
 
     /**
      * @brief compress primes
