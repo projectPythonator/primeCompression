@@ -28,6 +28,7 @@ namespace EndpointConversion {
      */
     void adjustBlockSize(const std::span<const std::uint64_t>, std::vector<std::uint8_t>);
 
+    void mergeSpans(std::span<std::uint8_t>, std::span<std::uint8_t>);
 
     class ToRB5 {
         private:

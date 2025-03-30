@@ -8,10 +8,13 @@ namespace {
     std::size_t setIndexLocations(
             const std::span<const std::uint8_t> buf, 
             const std::span<std::size_t> indices) {
+        std::size_t step = std::distance(buf.begin(), std::find(buf.begin(), buf.end(), unsigned_new_line));
         std::size_t i = 0;
-        for (std::size_t b = 0; b < buf.size(); b++)
-            if (buf[b] == unsigned_line_break)
-                indices[i++] = b;
+        for (std::size_t b = step; b < buf.size(); b += (step+1)) {
+            if (buf[b] != unsigned_line_break)
+                step++;
+            indices[i++] = step;
+        }
         return i;
     }
 }
